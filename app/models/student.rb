@@ -3,8 +3,8 @@ class Student < ApplicationRecord
     has_many :task, dependent: :destroy
 
     before_validation :ensure_login_has_a_value
-    before_validation :normalize_name, on: :create
-    before_validation :remove_whitespaces
+    before_validation :normalize_name, on: :create, if: :name?
+    before_validation :remove_whitespaces, if: :name?
     after_validation :print_status
     
     private
@@ -40,13 +40,13 @@ class Student < ApplicationRecord
     after_create do
         puts "Record Created!"
     end
-
+    
     before_update do
         self.login = name if login.blank?
     end
 
     after_update do
-        puts "Record Updated!"
+        puts "Student Updated!"
     end
 
     after_initialize do |student|

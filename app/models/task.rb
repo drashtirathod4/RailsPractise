@@ -5,12 +5,22 @@ class Task < ApplicationRecord
     after_destroy :log_destroy_action
     
     # this will set title after valid? will run
-    after_validation :set_title
+    after_validation :set_title, unless: :title
 
-    before_save :change_title, if: :title.nil?
+    before_save :change_title, unless: :title
+    before_save :normalize_title, if: :title?
     
+    private
+    def normalize_title
+        self.title  = title.downcase.titleize
+    end
+
     after_save do
         puts "Record Saved!"
+    end
+
+    around_save do
+        puts "Around Save!"
     end
 
     private
@@ -25,6 +35,7 @@ class Task < ApplicationRecord
     def log_destroy_action
         puts "Task Deleted!"
     end
+    
     after_initialize do |task|
         puts "Object Initialized"
     end

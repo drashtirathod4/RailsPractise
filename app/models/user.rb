@@ -24,4 +24,38 @@ class User < ApplicationRecord
       errors.add(:end_date, "must be after the start date") 
     end 
   end
+
+  before_save :normalize_name, :remove_whitespaces, if: :name?
+
+  def normalize_name
+    self.name = name.titleize
+  end
+
+  def remove_whitespaces
+    self.name = name.strip!
+  end
+
+  after_save do
+    puts "User Saved!"
+  end
+
+  after_update do
+    puts "User updated"
+  end
+
+  after_destroy do
+    puts "Task Deleted!"
+  end
+
+  after_initialize do |task|
+      puts "Object Initialized"
+  end
+
+  after_find do |task|
+      puts "object found..."
+  end
+
+  after_touch do |task|
+      puts "You have touched an object"
+  end
 end
