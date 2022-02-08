@@ -10,7 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_31_102240) do
+ActiveRecord::Schema.define(version: 2022_02_08_124312) do
+
+  create_table "books", force: :cascade do |t|
+    t.string "title"
+    t.integer "year"
+    t.string "isbn"
+    t.decimal "price"
+    t.integer "views"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "status"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "book_id"
+    t.index ["book_id"], name: "index_reviews_on_book_id"
+  end
 
   create_table "students", force: :cascade do |t|
     t.string "login"
@@ -42,5 +61,6 @@ ActiveRecord::Schema.define(version: 2022_01_31_102240) do
     t.date "end_date"
   end
 
+  add_foreign_key "reviews", "books"
   add_foreign_key "tasks", "students"
 end
