@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_11_110235) do
+ActiveRecord::Schema.define(version: 2022_02_14_102745) do
 
   create_table "account_histories", force: :cascade do |t|
     t.integer "credit_rating"
@@ -37,6 +37,14 @@ ActiveRecord::Schema.define(version: 2022_02_11_110235) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "status"
+  end
+
+  create_table "employees", force: :cascade do |t|
+    t.string "name"
+    t.integer "manager_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["manager_id"], name: "index_employees_on_manager_id"
   end
 
   create_table "pictures", force: :cascade do |t|
@@ -68,6 +76,7 @@ ActiveRecord::Schema.define(version: 2022_02_11_110235) do
     t.string "email"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "tasks_count"
   end
 
   create_table "suppliers", force: :cascade do |t|
@@ -98,8 +107,17 @@ ActiveRecord::Schema.define(version: 2022_02_11_110235) do
     t.date "end_date"
   end
 
+  create_table "vehicles", force: :cascade do |t|
+    t.string "type"
+    t.string "color"
+    t.decimal "price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   add_foreign_key "account_histories", "accounts"
   add_foreign_key "accounts", "suppliers"
+  add_foreign_key "employees", "employees", column: "manager_id"
   add_foreign_key "reviews", "books"
   add_foreign_key "tasks", "students"
 end

@@ -1,7 +1,8 @@
 class Task < ApplicationRecord
-    belongs_to :student
+    belongs_to :student, counter_cache: true
     # before_validation :set_title
-    validates :title, :student_id, presence: true, length: {maximum: 50}
+    validates :title, presence: true, length: {maximum: 50}
+    validates :student_id, presence: true
     after_destroy :log_destroy_action
     
     # this will set title after valid? will run
@@ -9,6 +10,11 @@ class Task < ApplicationRecord
 
     before_save :change_title, unless: :title
     before_save :normalize_title, if: :title?
+    after_save :saved
+
+    def saved
+        puts "The task is now saved!"
+    end
     
     private
     def normalize_title

@@ -1,12 +1,21 @@
 class Student < ApplicationRecord
     validates :login, :email, presence: true, on: :create
-    has_many :task, dependent: :destroy
+    has_many :tasks, before_add: :bef_task, after_add: :aft_task
 
     before_validation :ensure_login_has_a_value
     before_validation :normalize_name, on: :create, if: :name?
     before_validation :remove_whitespaces, if: :name?
     after_validation :print_status
     
+    private
+    def bef_task
+        puts "Before adding"
+    end
+
+    def aft_task
+        puts "After adding"
+    end
+
     private
     def ensure_login_has_a_value
         if login.nil?
