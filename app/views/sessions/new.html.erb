@@ -1,0 +1,26 @@
+<center>
+    <h1>Login</h1>
+
+    <%if flash[:notice] %>
+        <p style = "color:red"><%= notice %></p>
+    <% end %>
+
+    <%= form_for(:session, url: login_path) do |f| %>
+        <table cellpadding="15px">
+            <tr>
+                <td><%= f.label :email %></td>
+                <td><%= f.email_field :email, required: true %></td>
+            </tr>
+            <tr>
+                <td><%= f.label :password %></td>
+                <td><%= f.password_field :password, required: true %></td>
+            </tr>
+            <tr>
+                <td><%= f.submit "Login" %></td>
+            </tr>
+            <tr>
+                <td><b><%= link_to "Back", users_path %></b></td>
+            </tr>
+        </table>
+    <%end%>
+</center>

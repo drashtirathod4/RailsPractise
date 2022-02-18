@@ -1,10 +1,17 @@
 class UsersController < ApplicationController
+  # before filter
+  before_action :require_login, only: [:update, :destroy]
+
   def index
     @users = User.all()
   end
 
   def show
     @user = User.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.pdf { render pdf: generate_pdf(@user) }
+    end
   end
 
   def new
@@ -40,6 +47,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
     redirect_to users_path
+  end
+
+  def welcome
+    
   end
 
   private 
