@@ -1,0 +1,7 @@
+<center>
+    <%= button_to "Logout", logout_path, method: :delete %>
+    <%if flash[:notice] %>
+        <p style = "color:green"><%= notice %></p>
+    <% end %>
+    <h1>Welcome User</h1>
+</center>
