@@ -1,3 +1,4 @@
+require "prawn"
 class UsersController < ApplicationController
   # before filter
   before_action :require_login, only: [:update, :destroy]
@@ -10,7 +11,11 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     respond_to do |format|
       format.html
-      format.pdf { render pdf: generate_pdf(@user) }
+      format.pdf do
+        send_data generate_pdf(@user),
+              filename: "#{@user.name}.pdf",
+              type: "application/pdf"
+      end
     end
   end
 
@@ -56,5 +61,13 @@ class UsersController < ApplicationController
   private 
   def user_params
     params.require(:user).permit(:name, :email, :phone, :dob, :agreement, :password, :password_confirmation, :course, :start_date, :end_date)
+  end
+
+  def generate_pdf(user)
+    Prawn::Document.new do
+      text user.name, align: :center
+      text "Name: #{user.name}"
+      text "Email: #{user.email}"
+    end.render
   end
 end
