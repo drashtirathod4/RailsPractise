@@ -1,0 +1,69 @@
+<center>
+    <h1>Edit Trainee Details</h1>
+
+    <%if flash[:errors] %>
+        <% flash[:errors].each do |error| %>
+            <p style = "color:red"><%= error %></p>
+        <%end%>
+    <%end%>
+
+    <%= form_for @trainee do |t| %>
+        <table cellpadding="15px">
+            <tr>
+                <td><%= t.label :name %></td>
+                <td><%= t.text_field :name %></td>
+            </tr>
+            <tr>
+                <td><%= t.label :Email %></td>
+                <td><%= t.email_field :email %></td>
+            </tr>
+            <tr>
+                <td><%= t.label :address %></td>
+                <td><%= t.text_field :address %></td>
+            </tr>
+            <%= t.fields_for :addresses do |address| %>
+                <tr>
+                    <td><%= address.label :street %></td>
+                    <td><%= address.text_field :street %></td>
+                </tr>
+                <tr>
+                    <td><%= address.label :road %></td>
+                    <td><%= address.text_field :road %></td>
+                </tr>
+            <% end %>
+            <tr>
+                <td><%= t.label :gender %></td>
+                <td>
+                    <%= t.radio_button :gender, 'Male' %>Male
+                    <%= t.radio_button :gender, 'Female' %>Female
+                </td>
+            </tr>
+            <tr>
+                <td><%= t.label :hobbies %></td>
+                <td>
+                    <%= t.check_box :hobbies, value: 'Reading' %> Reading &nbsp;
+                    <%= t.check_box :hobbies, value: 'Singing' %> Singing &nbsp;
+                    <%= t.check_box :hobbies, value: 'Dancing' %> Dancing &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td><%= t.label :dob, "Date of Birth" %></td>
+                <td><%= t.date_field :dob %></td>
+            </tr>
+            <tr>
+                <td><%= t.label :city %></td>
+                <td><%= t.collection_select :city_id, City.all, :id, :name %></td>
+            </tr>
+            <tr>
+                <td><%= t.label :image %></td>
+                <td><%= t.file_field :image %></td>
+            </tr>
+            <tr>
+                <td><%= t.submit %></td>
+            </tr>
+            <tr>
+                <td><b><%= link_to "Back", trainees_path %></b></td>
+            </tr>
+        </table>
+    <% end %>
+</center>

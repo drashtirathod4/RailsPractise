@@ -1,0 +1,53 @@
+<center>
+    <h1>User Details</h1><br>
+    <h2><%= @trainee.name %></h2>
+    <table cellspacing = "20px">
+        <tr>
+            <th>Name :</th>
+            <td><%= @trainee.name %></td>
+        </tr>
+        <tr>
+            <th>Email :</th>
+            <td><%= @trainee.email %></td>
+        </tr>
+        <tr>
+            <th>Address :</th>
+            <td><%= @trainee.address %></td>
+        </tr>
+        <tr>
+            <th>Street :</th>
+            <td><%= @trainee.addresses.first.street %></td>
+        </tr>
+        <tr>
+            <th>Road :</th>
+            <td><%= @trainee.addresses.first.road %></td>
+        </tr>
+        <tr>
+            <th>Gender :</th>
+            <td><%= @trainee.gender %></td>
+        </tr>
+        <tr>
+            <th>Hobbies :</th>
+            <td><%= @trainee.hobbies %></td>
+        </tr>
+        <tr>
+            <th>Date of Birth :</th>
+            <td><%= @trainee.dob %></td>
+        </tr>
+        <tr>
+            <th>City :</th>
+            <td><%= @trainee.city.name %></td>
+        </tr>
+        <tr>
+            <td><b>Image : </b></td>
+            <td>
+                <% if @trainee.image.attached? %>
+                    <%= image_tag @trainee.image, style: "width: 100px; display: block:" %>
+                <% end %>
+            </td>
+        </tr>
+        <tr>
+            <td><%= link_to "Back", trainees_path %></b></td>
+        </tr>
+    </table>
+</center>
