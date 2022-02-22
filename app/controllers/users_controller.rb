@@ -55,7 +55,10 @@ class UsersController < ApplicationController
   end
 
   def welcome
-    
+    @current_user = current_user
+  end
+
+  def profile
   end
 
   private 

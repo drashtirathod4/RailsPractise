@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_18_063242) do
+ActiveRecord::Schema.define(version: 2022_02_22_092110) do
 
   create_table "account_histories", force: :cascade do |t|
     t.integer "credit_rating"
@@ -28,6 +28,59 @@ ActiveRecord::Schema.define(version: 2022_02_18_063242) do
     t.index ["supplier_id"], name: "index_accounts_on_supplier_id", unique: true
   end
 
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "addresses", force: :cascade do |t|
+    t.string "street"
+    t.string "road"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "trainee_id", null: false
+    t.index ["trainee_id"], name: "index_addresses_on_trainee_id"
+  end
+
+  create_table "ads", force: :cascade do |t|
+    t.string "ad_name"
+    t.integer "magazine_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["magazine_id"], name: "index_ads_on_magazine_id"
+  end
+
+  create_table "articles", force: :cascade do |t|
+    t.string "title"
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_articles_on_user_id"
+  end
+
   create_table "books", force: :cascade do |t|
     t.string "title"
     t.integer "year"
@@ -39,12 +92,24 @@ ActiveRecord::Schema.define(version: 2022_02_18_063242) do
     t.string "status"
   end
 
+  create_table "cities", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "employees", force: :cascade do |t|
     t.string "name"
     t.integer "manager_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["manager_id"], name: "index_employees_on_manager_id"
+  end
+
+  create_table "magazines", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "pictures", force: :cascade do |t|
@@ -93,6 +158,20 @@ ActiveRecord::Schema.define(version: 2022_02_18_063242) do
     t.index ["student_id"], name: "index_tasks_on_student_id"
   end
 
+  create_table "trainees", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.text "address"
+    t.string "gender"
+    t.string "hobbies"
+    t.date "dob"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "city_id"
+    t.string "image"
+    t.index ["city_id"], name: "index_trainees_on_city_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -117,7 +196,13 @@ ActiveRecord::Schema.define(version: 2022_02_18_063242) do
 
   add_foreign_key "account_histories", "accounts"
   add_foreign_key "accounts", "suppliers"
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "addresses", "trainees"
+  add_foreign_key "ads", "magazines"
+  add_foreign_key "articles", "users"
   add_foreign_key "employees", "employees", column: "manager_id"
   add_foreign_key "reviews", "books"
   add_foreign_key "tasks", "students"
+  add_foreign_key "trainees", "cities"
 end

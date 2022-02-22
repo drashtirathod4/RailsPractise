@@ -3,5 +3,6 @@
     <%if flash[:notice] %>
         <p style = "color:green"><%= notice %></p>
     <% end %>
-    <h1>Welcome User</h1>
+    <h1>Welcome <%= @current_user.name %></h1><br>
+    <b><%= button_to "Profile", profile_user_path(@current_user), method: :get %></b>
 </center>
