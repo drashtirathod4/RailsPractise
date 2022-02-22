@@ -1,0 +1,12 @@
+<center>
+    <h1>User Profile</h1><br>
+    <h2><%= current_user.name %></h2><br>
+    <h4>Name : <%= current_user.name %></h4>
+    <h4>Phone : <%= current_user.phone %></h4>
+    <h4>Email : <%= current_user.email %></h4>
+    <h4>Date of Birth : <%= current_user.dob %></h4>
+    <h4>Course : <%= current_user.course %></h4>
+    <h4>Start Date : <%= current_user.start_date %></h4>
+    <h4>End Date : <%= current_user.end_date %></h4><br>
+    <%= link_to "Back", welcome_path %></b>
+</center>
