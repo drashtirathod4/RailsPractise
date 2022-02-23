@@ -1,0 +1,24 @@
+<center>
+  <%if flash[:notice] %>
+    <p style = "color:green"><%= notice %></p>
+  <% end %>
+
+  <h1>List of Magazines</h1>
+  <table cellpadding="15px" border="1px">
+      <tr>
+        <td><b>Magazine Name</b></td>
+        <td><b>View</b></td>
+        <td><b>Edit</b></td>
+        <td><b>Remove</b></td>
+      </tr>
+      <% @magazines.each do |magazine| %>
+      <tr>
+        <td><b><%= magazine.title %></b></td>
+        <td><%= button_to "View", magazine_path(magazine), method: :get %></td>
+        <td><%= button_to "Edit", edit_magazine_path(magazine), method: :get %></td>
+        <td><%= button_to 'Remove', magazine_path(magazine), method: 'delete' %></td>
+      </tr>
+    <% end %>
+  </table><br><br>
+  <%= button_to "Add New Magzine", new_magazine_path, method: :get %><br>
+</center>
