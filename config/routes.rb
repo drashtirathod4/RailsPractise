@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  # nested resources and shallow nesting 
+  # breaking large route file into small one using draw()
+  draw(:admin) # Will load another route file located in `config/routes/admin.rb`
+
   # route : /sekret/ads/1
   scope shallow_path: "sekret" do
     resources :magazines do
@@ -28,6 +30,14 @@ Rails.application.routes.draw do
   get 'signup'  => 'users#new'
   get 'welcome'  => 'users#welcome'
 
+  # unicode characters route
+  # get 'こんにちは', to: 'users#welcome'
+
+  # Direct routes : this will direct to rails root path after user login
+  # direct :welcome do
+  #   "https://rubyonrails.org"
+  # end
+
   # member routes 
   # route: /users/1/profile
   resources :users do
@@ -35,6 +45,9 @@ Rails.application.routes.draw do
       get 'profile'
     end
   end
+
+  # using root
+  root 'users#index'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
