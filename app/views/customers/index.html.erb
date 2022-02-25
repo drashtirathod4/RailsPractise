@@ -1,0 +1,21 @@
+<h1 align="center">List of Customers</h1>
+<table align="center" cellpadding="15px" border="1px">
+    <tr>
+      <td><b>Customer Name</b></td>
+      <td><b>View</b></td>
+      <td><b>Edit</b></td>
+      <td><b>Remove</b></td>
+    </tr>
+    <% @customers.each do |customer| %>
+    <tr>
+      <td><b><%= customer.name %></b></td>
+      <td><%= button_to "View", customer_path(customer), method: :get %></td>
+      <td><%= button_to "Edit", edit_customer_path(customer), method: :get %></td>
+      <td><%= button_to 'Remove', customer_path(customer), method: 'delete' %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td colspan="10" align="center"><%= button_to "Add new Customer", new_customer_path, method: :get%></td>
+  </tr>
+</table>
+<%# <%= video_tag "video.gif", autoplay: true, controls: true, autobuffer: true %>

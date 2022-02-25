@@ -1,0 +1,12 @@
+<%# content_for method for named yield %>
+<% content_for :head do %>
+  <title>Customer page</title>
+<% end %>
+
+<center>
+    <h1>Customer Details</h1>
+    <%= image_tag "profile.png", size: "110x100", alt: "Profile" %>
+    <h2><%= @customer.name %></h2>
+    <h4>Name : <%= @customer.name %></h4>
+    <b><%= link_to "Back", customers_path %></b>
+</center>
