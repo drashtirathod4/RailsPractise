@@ -1,7 +1,9 @@
 class UserMailer < ApplicationMailer
     def welcome_email(user)
         @user = user
-        # attachments['filename.jpg'] = File.read('/path/to/filename.jpg')
-        mail(to: @user.email, subject: 'Welcome User')
+        attachments.inline['welcome.png'] = File.read('/home/drashtirathod/Downloads/welcome.png')
+        mail(to: @user.email, subject: 'Welcome User') do |format|
+            format.html { render layout: 'my_layout' }
+        end
     end
 end
