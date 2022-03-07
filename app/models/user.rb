@@ -8,7 +8,7 @@ class User < ApplicationRecord
   validates :phone, numericality: true, length: { is: 10 }, unless: Proc.new { |a| a.phone.blank? }
   validate :dob_cannot_be_in_the_future
   validates :agreement, acceptance: {message: ": You cannot proceed without accepting Terms & Conditions!" }, allow_nil: false
-
+  validates :name, presence: true
   validates :course, inclusion: {in: %w{Python ROR}, message: " can't be the value %{value} inserted!"}, unless: Proc.new { |a| a.course.blank? }
   validate :end_after_start
 
