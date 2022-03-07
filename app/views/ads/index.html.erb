@@ -1,0 +1,24 @@
+<center>
+  <%if flash[:notice] %>
+    <p style = "color:green"><%= notice %></p>
+  <% end %>
+
+  <h1>List of Ads</h1>
+  <table cellpadding="15px" border="1px">
+      <tr>
+        <td><b>Ad Name</b></td>
+        <td><b>View</b></td>
+        <td><b>Edit</b></td>
+        <td><b>Remove</b></td>
+      </tr>
+      <% @ads.each do |ad| %>
+      <tr>
+        <td><b><%= ad.name %></b></td>
+        <td><%= button_to "View", ad_path(ad), method: :get %></td>
+        <td><%= button_to "Edit", edit_ad_path(ad), method: :get %></td>
+        <td><%= button_to 'Remove', ad_path(ad), method: 'delete' %></td>
+      </tr>
+    <% end %>
+  </table><br><br>
+  <%= button_to "Add New Ad", new_magazine_ad_path, method: :get %><br>
+</center>

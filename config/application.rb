@@ -6,6 +6,8 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# config.action_mailer.default_url_options = { host: 'localhost' }
+
 module Practise
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.

@@ -1,5 +1,8 @@
 class User < ApplicationRecord
-  validates_presence_of :name, :email, :phone, :dob, :password, :course, :start_date, :end_date
+  has_secure_password
+  has_many :articles
+  has_many :events
+  # validates_presence_of :name, :email, :phone, :dob, :password, :course, :start_date, :end_date
   validates :email, uniqueness: true
   validates :password, confirmation: true, length: { within: 6..15 }, on: :create
   validates :password, confirmation: true, length: { within: 6..15 }, on: :update
