@@ -24,5 +24,4 @@ ActiveRecord::Schema[7.0].define(version: 2022_01_28_115325) do
     t.date "start_date"
     t.date "end_date"
   end
-
 end
