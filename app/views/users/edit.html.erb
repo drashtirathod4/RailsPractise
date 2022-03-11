@@ -7,7 +7,7 @@
         <%end%>
     <%end%>
 
-    <%= form_for @user do |f| %>
+    <%= form_with(model: @user, local: false) do |f| %>
         <table cellpadding="15px">
             <tr>
                 <td><%= f.label :name %></td>
@@ -22,12 +22,8 @@
                 <td><%= f.email_field :email %></td>
             </tr>
             <tr>
-                <td><%= f.label :password %></td>
-                <td><%= f.password_field :password %></td>
-            </tr>
-            <tr>
-                <td><%= f.label :password_confirmation %></td>
-                <td><%= f.password_field :password_confirmation %></td>
+                <td><%= f.label :password_digest %></td>
+                <td><%= f.password_field :password_digest %></td>
             </tr>
             <tr>
                 <td><%= f.label :DOB %></td>
