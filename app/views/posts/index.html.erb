@@ -1,0 +1,24 @@
+<h1 align="center">List of Posts</h1>
+<table align="center" cellpadding="15px" border="1px">
+    <tr>
+      <td><b>Post Title</b></td>
+      <td><b>User Name</b></td>
+      <td><b>User Email</b></td>
+      <td><b>View</b></td>
+      <td><b>Edit</b></td>
+      <td><b>Remove</b></td>
+    </tr>
+    <% @posts.each do |post| %>
+    <tr>
+      <td><b><%= post.title %></b></td>
+      <td><%= post.user_name %></td>
+      <td><%= post.user_email %></td>
+      <td><%= button_to "View", post_path(post), method: :get %></td>
+      <td><%= button_to "Edit", edit_post_path(post), method: :get %></td>
+      <td><%= button_to 'Remove', post_path(post), method: 'delete' %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td colspan="10" align="center"><%= button_to "Add new Post", new_post_path, method: :get%></td>
+  </tr>
+</table>
