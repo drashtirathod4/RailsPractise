@@ -1,9 +1,7 @@
 class User < ApplicationRecord
-  validates_presence_of :name, :email, :phone, :dob, :password, :course, :start_date, :end_date
+  has_one_attached :document
+  validates_presence_of :name, :email, :phone, :dob, :course, :start_date, :end_date
   validates :email, uniqueness: true
-  validates :password, confirmation: true, length: { within: 6..15 }, on: :create
-  validates :password, confirmation: true, length: { within: 6..15 }, on: :update
-  validates :password_confirmation, presence: true
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, unless: Proc.new { |a| a.email.blank? }
   validates :phone, numericality: true, length: { is: 10 }, unless: Proc.new { |a| a.phone.blank? }
   validate :dob_cannot_be_in_the_future

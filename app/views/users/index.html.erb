@@ -1,18 +1,18 @@
 <h1 align="center">List of Users</h1>
 <table align="center" cellpadding="15px" border="1px">
-    <tr>
-      <td><b>User Name</b></td>
-      <td><b>Phone Number</b></td>
-      <td><b>Email</b></td>
-      <td><b>DOB</b></td>
-      <td><b>Course</b></td>
-      <td><b>Start Date</b></td>
-      <td><b>End Date</b></td>
-      <td><b>View</b></td>
-      <td><b>Edit</b></td>
-      <td><b>Remove</b></td>
-    </tr>
-    <% @users.each do |user| %>
+  <tr>
+    <td><b>User Name</b></td>
+    <td><b>Phone Number</b></td>
+    <td><b>Email</b></td>
+    <td><b>DOB</b></td>
+    <td><b>Course</b></td>
+    <td><b>Start Date</b></td>
+    <td><b>End Date</b></td>
+    <td><b>View</b></td>
+    <td><b>Edit</b></td>
+    <td><b>Remove</b></td>
+  </tr>
+  <% @users.each do |user| %>
     <tr>
       <td><b><%= user.name %></b></td>
       <td><%= user.phone %></td>

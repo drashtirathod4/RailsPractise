@@ -1,8 +1,18 @@
 <center>
     <h1>User Details</h1>
+    <p>
+        <% if @user.document.attached? %>
+            <% if (@user.document).content_type == "image/png" %>
+                <%= image_tag @user.document, style: "width: 100px; display: block:" %>
+            <% else %>
+                <%= link_to 'Document', @user.document, download: 'data' %>
+            <% end %>
+        <% end %>
+    </p>
     <h2><%= @user.name %></h2>
     <h4>Email : <%= @user.phone %></h4>
     <h4>Email : <%= @user.email %></h4>
     <h4>Date of Birth : <%= @user.dob %></h4>
+    
     <%= link_to "Back", users_path %></b>
 </center>
