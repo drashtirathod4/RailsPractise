@@ -4,5 +4,18 @@
     <h4>Email : <%= @user.phone %></h4>
     <h4>Email : <%= @user.email %></h4>
     <h4>Date of Birth : <%= @user.dob %></h4>
-    <%= link_to "Back", users_path %></b>
+    <h4>Document:
+        <% if (@user.document).attached? %>
+            <%= link_to 'Download Document', @user.document, download: 'data' %><br><br>
+            <%= link_to 'View Document', @user.document %>
+            <p><%= button_to "Remove Document", delete_attachement_user_path(@user), method: 'delete', form: { data: { turbo_confirm: 'Are you sure?' } } %></p>
+        <% end %></p>
+    </h4>
+    <h4>Posts: <p>
+        <% @user.post.each do |post| %>
+            <%= image_tag post.variant(:thumb), style: "width: 200px; display: block;" %>
+            <p><%= button_to "Remove Post", delete_post_attachement_user_path(@user), method: 'delete', params: {post_id: post} , form: { data: { turbo_confirm: 'Are you sure?' } } %></p>
+        <% end %></p>
+    </h4>
+    <b><%= link_to "Back", users_path %></b><br><br>
 </center>

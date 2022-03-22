@@ -1,4 +1,8 @@
 class User < ApplicationRecord
+  has_one_attached :document
+  has_many_attached :post do |post|
+    post.variant :thumb, resize_to_limit: [200, 300]
+  end
   validates_presence_of :name, :email, :phone, :dob, :course, :start_date, :end_date
   validates :email, uniqueness: true
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, unless: Proc.new { |a| a.email.blank? }
@@ -10,9 +14,9 @@ class User < ApplicationRecord
   validate :end_after_start
 
   def dob_cannot_be_in_the_future
-      if dob.present? && dob > Date.today
-        errors.add(:dob, "Birthdate can't be in future!")
-      end
+    if dob.present? && dob > Date.today
+      errors.add(:dob, "Birthdate can't be in future!")
+    end
   end
 
   def end_after_start

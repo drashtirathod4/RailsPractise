@@ -27,6 +27,7 @@ class UsersController < ApplicationController
 
   def update 
     @user = User.find(params[:id])
+    @user.post.attach(params[:post])
     @user.update(user_params)
     if @user.valid?
       redirect_to user_path
@@ -34,6 +35,18 @@ class UsersController < ApplicationController
       flash[:errors] = @user.errors.full_messages
       redirect_to edit_user_path(@user)
     end
+  end
+
+  def delete_attachement
+    @user = User.find(params[:id])
+    @user.document.purge
+    redirect_to user_path(@user)
+  end
+
+  def delete_post_attachement
+    @user = User.find(params[:id])
+    @user.post.attachments.where(id: params[:post_id]).purge
+    redirect_to user_path(@user)
   end
 
   def destroy
@@ -44,6 +57,6 @@ class UsersController < ApplicationController
 
   private 
   def user_params
-    params.require(:user).permit(:name, :email, :phone, :dob, :agreement, :course, :start_date, :end_date)
+    params.require(:user).permit(:name, :email, :phone, :dob, :agreement, :course, :start_date, :end_date, :document, post: [])
   end
 end
