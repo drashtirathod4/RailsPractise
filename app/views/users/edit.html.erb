@@ -1,11 +1,11 @@
 <center>
     <h1>Edit User Details</h1>
 
-    <%if flash[:errors] %>
+    <% if flash[:errors] %>
         <% flash[:errors].each do |error| %>
             <p style = "color:red"><%= error %></p>
-        <%end%>
-    <%end%>
+        <% end %>
+    <% end %>
 
     <%= form_for @user do |f| %>
         <table cellpadding="15px">
@@ -44,11 +44,36 @@
                 </td>
             </tr>
             <tr>
+                <td><%= f.label :document %></td>
+                <td><%= f.file_field :document, accept: "application/pdf" %>
+                    <% if f.object.document.attached? %>
+                        The currently attached file is <%= @user.document.filename %>. Click here to replace this file.
+                    <% else %>
+                        No Post has been uploaded yet. Please pick a post.
+                    <% end %>
+                </td>
+            </tr>
+            <tr>
+                <td><%= f.label :post %></td>
+                <td><%= f.file_field :post, multiple: true, accept: "image/png,image/gif,image/jpeg" %>
+                    <%= f.hidden_field :post, value: f.object.post if f.object.post.attached? %>
+                    <% if f.object.post.attached? %>
+                        The currently attached file is 
+                        <% (f.object.post).each do |file| %>
+                            <%= file.filename %> 
+                        <% end %>
+                        . Click here to replace this file.
+                    <% else %>
+                        No Post has been uploaded yet. Please pick a post.
+                    <% end %>
+                </td>
+            </tr>
+            <tr>
                 <td><%= f.submit %></td>
             </tr>
             <tr>
                 <td><b><%= link_to "Back", users_path %></b></td>
             </tr>
         </table>
-    <%end%>
+    <% end %>
 </center>

@@ -44,6 +44,14 @@
                 </td>
             </tr>
             <tr>
+                <td><%= f.label :document %></td>
+                <td><%= f.file_field :document, accept: "application/pdf" %></td>
+            </tr>
+            <tr>
+                <td><%= f.label :post %></td>
+                <td><%= f.file_field :post, multiple: true, accept: "image/png,image/gif,image/jpeg" %></td>
+            </tr>
+            <tr>
                 <td><%= f.submit %></td>
             </tr>
             <tr>
