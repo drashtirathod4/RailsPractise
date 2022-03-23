@@ -46,6 +46,10 @@
                 <td><%= f.date_field :end_date %></td>
             </tr>
             <tr>
+                <td><%= f.label :image %></td>
+                <td><%= f.file_field :image %></td>
+            </tr>
+            <tr>
                 <td colspan="2">
                     <%= f.check_box :agreement, {}, true, false %>
                     <%= f.label "I agree to the terms & conditions." %>

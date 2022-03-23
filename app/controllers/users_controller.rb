@@ -9,14 +9,14 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    respond_to do |format|
-      format.html
-      format.pdf do
-        send_data generate_pdf(@user),
-              filename: "#{@user.name}.pdf",
-              type: "application/pdf"
-      end
-    end
+    # respond_to do |format|
+    #   format.html
+    #   format.pdf do
+    #     send_data generate_pdf(@user),
+    #           filename: "#{@user.name}.pdf",
+    #           type: "application/pdf"
+    #   end
+    # end
   end
 
   def new
@@ -26,6 +26,7 @@ class UsersController < ApplicationController
   def create
     user = User.create(user_params)
     if user.valid?
+      UserMailer.welcome_email(user).deliver_later
       redirect_to users_path
     else 
       flash[:errors] = user.errors.full_messages
@@ -54,6 +55,12 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
+  def remove_image 
+    @user = User.find(params[:id])
+    @user.image.remove!
+    redirect_to user_path(@user)
+  end
+
   def welcome
     @current_user = current_user
   end
@@ -63,7 +70,7 @@ class UsersController < ApplicationController
 
   private 
   def user_params
-    params.require(:user).permit(:name, :email, :phone, :dob, :agreement, :password, :password_confirmation, :course, :start_date, :end_date)
+    params.require(:user).permit(:name, :email, :phone, :dob, :agreement, :password, :password_confirmation, :course, :start_date, :end_date, :image)
   end
 
   def generate_pdf(user)

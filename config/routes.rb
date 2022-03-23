@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   resources :users do
     member do 
       get 'profile'
+      delete 'remove_image'
     end
   end
 

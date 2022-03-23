@@ -7,6 +7,14 @@ gem 'bcrypt'
 
 gem 'prawn'
 
+gem "figaro"
+
+gem "letter_opener", group: :development
+
+gem 'carrierwave', '~> 2.0'
+
+gem 'mini_magick'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.1"
 

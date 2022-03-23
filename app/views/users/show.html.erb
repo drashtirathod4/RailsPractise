@@ -4,5 +4,14 @@
     <h4>Email : <%= @user.phone %></h4>
     <h4>Email : <%= @user.email %></h4>
     <h4>Date of Birth : <%= @user.dob %></h4>
+    <% if @user.image? %>
+        <p>
+            <%= image_tag @user.image.url(:thumb) %><br><br>
+            <%= link_to "Download Image", @user.image.url, download: 'data' %>
+        </p>
+        <p>
+            <%= button_to "Remove Image", remove_image_user_path(@user), method: :delete %>
+        </p>
+    <% end %>
     <%= link_to "Back", users_path %></b>
 </center>
