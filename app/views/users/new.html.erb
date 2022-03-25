@@ -22,6 +22,10 @@
                 <td><%= f.email_field :email %></td>
             </tr>
             <tr>
+                <td><%= f.label :role %></td>
+                <td><%= f.collection_check_boxes :role_ids, Role.all, :id, :name %></td>
+            </tr>
+            <tr>
                 <td><%= f.label :password %></td>
                 <td><%= f.password_field :password %></td>
             </tr>

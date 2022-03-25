@@ -1,4 +1,8 @@
 class User < ApplicationRecord
+  rolify
+  after_create :assign_default_role
+  validate :must_have_a_role, on: :update
+
   has_secure_password
   has_many :articles
   has_many :events
@@ -26,5 +30,18 @@ class User < ApplicationRecord
     if end_date < start_date
       errors.add(:end_date, "must be after the start date") 
     end 
+  end
+
+  private
+  # rolify method to assign default role to user
+  def assign_default_role
+    self.add_role(:newuser) if self.roles.blank?
+  end
+
+  # to validate role filed in user form
+  def must_have_a_role
+    unless roles.any?
+      errors.add(:roles, 'must have at least one role')
+    end
   end
 end

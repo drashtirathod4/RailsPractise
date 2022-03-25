@@ -1,8 +1,13 @@
 <center>
     <h1>User Details</h1>
     <h2><%= @user.name %></h2>
-    <h4>Email : <%= @user.phone %></h4>
+    <h4>Phone : <%= @user.phone %></h4>
     <h4>Email : <%= @user.email %></h4>
+    <h4>Role : 
+        <% @user.roles.each do |r| %>
+            <%= r.name.capitalize %>
+        <% end %> 
+    </h4>
     <h4>Date of Birth : <%= @user.dob %></h4>
     <%= link_to "Back", users_path %></b>
 </center>

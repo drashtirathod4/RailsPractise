@@ -6,25 +6,31 @@
 
   <h1>List of Users</h1>
   <table cellpadding="15px" border="1px">
-      <tr>
-        <td><b>User Name</b></td>
-        <td><b>Phone Number</b></td>
-        <td><b>Email</b></td>
-        <td><b>DOB</b></td>
-        <td><b>Course</b></td>
-        <td><b>Start Date</b></td>
-        <td><b>End Date</b></td>
-        <td><b>View</b></td>
-        <td><b>Edit</b></td>
-        <td><b>Remove</b></td>
-      </tr>
-      <% @users.each do |user| %>
+    <tr>
+      <td><b>User Name</b></td>
+      <td><b>Phone Number</b></td>
+      <td><b>Email</b></td>
+      <td><b>DOB</b></td>
+      <td><b>Course</b></td>
+      <td><b>Role</b></td>
+      <td><b>Start Date</b></td>
+      <td><b>End Date</b></td>
+      <td><b>View</b></td>
+      <td><b>Edit</b></td>
+      <td><b>Remove</b></td>
+    </tr>
+    <% @users.each do |user| %>
       <tr>
         <td><b><%= user.name %></b></td>
         <td><%= user.phone %></td>
         <td><%= user.email %></td>
         <td><%= user.dob %></td>
         <td><%= user.course %></td>
+        <td>
+          <% user.roles.each do |r| %>
+            <%= r.name.capitalize %>
+          <% end %>
+        </td>
         <td><%= user.start_date %></td>
         <td><%= user.end_date %></td>
         <td><%= button_to "View", user_path(user), method: :get %></td>
