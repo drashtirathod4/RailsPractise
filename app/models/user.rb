@@ -9,6 +9,8 @@ class User < ApplicationRecord
   validates :course, inclusion: {in: %w{Python ROR}, message: " can't be the value %{value} inserted!"}, unless: Proc.new { |a| a.course.blank? }
   validate :end_after_start
 
+  paginates_per 2
+
   def dob_cannot_be_in_the_future
       if dob.present? && dob > Date.today
         errors.add(:dob, "Birthdate can't be in future!")
