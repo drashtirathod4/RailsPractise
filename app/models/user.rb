@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_paper_trail on:[:update, :destroy], only: [:name, :email]
   validates_presence_of :name, :email, :phone, :dob, :course, :start_date, :end_date
   validates :email, uniqueness: true
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, unless: Proc.new { |a| a.email.blank? }

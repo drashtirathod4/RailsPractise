@@ -36,6 +36,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def rollback
+    @user = User.find(params[:user_id])
+    version = @user.versions.find(params[:version])
+    if version.reify.save
+      redirect_to @user, notice: 'User was successfully rollbacked.'
+    else
+      render :show
+    end
+  end
+
   def destroy
     @user = User.find(params[:id])
     @user.destroy
