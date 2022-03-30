@@ -12,13 +12,15 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.create(user_params)
-    if user.valid?
-      redirect_to users_path
-    else 
-      flash[:errors] = user.errors.full_messages
-      redirect_to new_user_path
-    end
+    GenerateRandomUserJob.perform_later
+    # user = User.create(user_params)
+    # if user.valid?
+    #   redirect_to users_path
+    # else 
+    #   flash[:errors] = user.errors.full_messages
+    #   redirect_to new_user_path
+    # end
+    redirect_to users_path
   end
 
   def edit
