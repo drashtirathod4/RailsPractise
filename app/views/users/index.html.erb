@@ -1,4 +1,15 @@
 <h1 align="center">List of Users</h1>
+<%= form_tag users_path, method: :get do %>
+  <table cellpadding = "15px">
+    <tr>
+      <td><b>Search User : </b></td>
+      <td><input type="text" name="query" id="query" placeholder="I want to find…"></td>
+      <td><input type="submit" name="commit" value="Search"></td>
+      <td><%= link_to "Back", users_path, method: :get %></td>
+    </tr>
+  </table><br>
+<% end %>
+
 <table align="center" cellpadding="15px" border="1px">
     <tr>
       <td><b>User Name</b></td>
