@@ -1,32 +1,36 @@
-<h1 align="center">List of Users</h1>
-<table align="center" cellpadding="15px" border="1px">
+<center>
+  <h1>List of Users</h1><br>
+  <%= link_to "Add random user", generate_random_user_path, method: :post %><br><br>
+
+  <table cellpadding="15px" border="1px">
+      <tr>
+        <td><b>User Name</b></td>
+        <td><b>Phone Number</b></td>
+        <td><b>Email</b></td>
+        <td><b>DOB</b></td>
+        <td><b>Course</b></td>
+        <td><b>Start Date</b></td>
+        <td><b>End Date</b></td>
+        <td><b>View</b></td>
+        <td><b>Edit</b></td>
+        <td><b>Remove</b></td>
+      </tr>
+      <% @users.each do |user| %>
+      <tr>
+        <td><b><%= user.name %></b></td>
+        <td><%= user.phone %></td>
+        <td><%= user.email %></td>
+        <td><%= user.dob %></td>
+        <td><%= user.course %></td>
+        <td><%= user.start_date %></td>
+        <td><%= user.end_date %></td>
+        <td><%= button_to "View", user_path(user), method: :get %></td>
+        <td><%= button_to "Edit", edit_user_path(user), method: :get %></td>
+        <td><%= button_to 'Remove', user_path(user), method: 'delete' %></td>
+      </tr>
+    <% end %>
     <tr>
-      <td><b>User Name</b></td>
-      <td><b>Phone Number</b></td>
-      <td><b>Email</b></td>
-      <td><b>DOB</b></td>
-      <td><b>Course</b></td>
-      <td><b>Start Date</b></td>
-      <td><b>End Date</b></td>
-      <td><b>View</b></td>
-      <td><b>Edit</b></td>
-      <td><b>Remove</b></td>
+      <td colspan="10" align="center"><%= button_to "Add new User", new_user_path, method: :get%></td>
     </tr>
-    <% @users.each do |user| %>
-    <tr>
-      <td><b><%= user.name %></b></td>
-      <td><%= user.phone %></td>
-      <td><%= user.email %></td>
-      <td><%= user.dob %></td>
-      <td><%= user.course %></td>
-      <td><%= user.start_date %></td>
-      <td><%= user.end_date %></td>
-      <td><%= button_to "View", user_path(user), method: :get %></td>
-      <td><%= button_to "Edit", edit_user_path(user), method: :get %></td>
-      <td><%= button_to 'Remove', user_path(user), method: 'delete' %></td>
-    </tr>
-  <% end %>
-  <tr>
-    <td colspan="10" align="center"><%= button_to "Add new User", new_user_path, method: :get%></td>
-  </tr>
-</table>
+  </table>
+</center>

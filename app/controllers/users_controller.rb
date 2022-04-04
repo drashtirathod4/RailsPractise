@@ -12,8 +12,8 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.create(user_params)
-    if user.valid?
+    user = User.create(params[:id])
+    if user
       redirect_to users_path
     else 
       flash[:errors] = user.errors.full_messages
@@ -40,6 +40,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
     redirect_to users_path
+  end
+
+  def generate_random_user
+    GenerateRandomUserJob.perform_now()
   end
 
   private 
