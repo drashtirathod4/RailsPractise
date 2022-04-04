@@ -3,8 +3,9 @@ class GenerateRandomUserJob < ApplicationJob
 
   def perform(*args)
     user = User.new
-    user.name = "Drashti"
-    user.email = "drashtir@gmail.com"
+    user.name = Faker::Name.name  
+    user.email = Faker::Internet.email  
     user.save!
+    sleep 2
   end
 end
