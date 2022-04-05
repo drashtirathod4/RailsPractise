@@ -1,7 +1,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  post '/generate_random_user', to: 'users#generate_random_user'
+  get '/generate_random_user', to: 'users#generate_random_user'
 
   mount Sidekiq::Web => '/sidekiq'
   resources :users
