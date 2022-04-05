@@ -2,9 +2,11 @@
   <%# displaying flash notice %>
   <%if flash[:notice] %>
     <p style = "color:green"><%= notice %></p>
-  <% end %>
+  <% end %> 
 
-  <h1>List of Users</h1>
+  <h1>List of Users</h1><br>
+  <%= link_to "Send Promotion Mail", send_mail_path, method: :get %>
+
   <table cellpadding="15px" border="1px">
       <tr>
         <td><b>User Name</b></td>

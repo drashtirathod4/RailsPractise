@@ -6,4 +6,11 @@ class UserMailer < ApplicationMailer
             format.html { render layout: 'my_layout' }
         end
     end
+
+    def promotion_mail(user)
+        @user = user
+        mail(to: @user.email, subject: 'Hello User') do |format|
+            format.html
+        end
+    end
 end

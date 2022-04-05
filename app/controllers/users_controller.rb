@@ -62,6 +62,15 @@ class UsersController < ApplicationController
   def profile
   end
 
+  def send_mail
+    @users = User.all
+    @users.each do |user|
+      UserMailer.delay.promotion_mail(user)
+    end
+    flash[:notice] = "Delivering Mail."
+    redirect_to users_path
+  end
+
   private 
   def user_params
     params.require(:user).permit(:name, :email, :phone, :dob, :agreement, :password, :password_confirmation, :course, :start_date, :end_date)

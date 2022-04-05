@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'send_mail', to: 'users#send_mail'
+
   # breaking large route file into small one using draw()
   draw(:admin) # Will load another route file located in `config/routes/admin.rb`
 
