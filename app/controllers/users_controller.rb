@@ -26,8 +26,8 @@ class UsersController < ApplicationController
   def create
     user = User.create(user_params)
     if user.valid?
-      UserMailer.welcome_email(user).deliver
-      redirect_to users_path
+      UserMailer.welcome_email(user).deliver_later
+      redirect_to users_path, notice: "Delievering welcome email."
     else 
       flash[:errors] = user.errors.full_messages
       redirect_to new_user_path
