@@ -1,0 +1,49 @@
+<%if flash[:errors] %>
+    <% flash[:errors].each do |error| %>
+        <p style = "color:red"><%= error %></p>
+    <% end %>
+<% end %>
+
+<%= simple_form_for @user, defaults: { label_html: { class: 'form-label' } } do |f| %>
+    <table cellpadding="15px">
+        <tr>
+            <td><%= f.input :name, label: 'Your Username' %></td>
+        </tr>
+        <tr>
+            <td><%= f.input :phone %></td>
+        </tr>
+        <tr>
+            <td><%= f.input :email, placeholder: 'user@domain.com' %></td>
+        </tr>
+        <tr>
+            <td><%= f.input :dob, start_year: Date.today.year - 22, end_year: Date.today.year - 12 %></td>
+        </tr>
+        <tr>
+            <td><%= f.input :course, hint: 'Python / ROR', as: :text %></td>
+        </tr>
+        <tr>
+            <td><%= f.input :start_date, start_year: Date.today.year - 1, end_year: Date.today.year %></td>
+        </tr>
+        <tr>
+            <td><%= f.input :end_date, start_year: Date.today.year - 1, end_year: Date.today.year %></td>
+        </tr>
+        <tr>
+            <td><%= f.input :password_digest %></td>
+        </tr>
+        <tr>
+            <td><%= f.input :password_digest_confirmation %></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <%= f.input :agreement, hint: ' I agree to the terms & conditions.', as: :boolean, checked_value: true, unchecked_value: false %>
+                <p></p>
+            </td>
+        </tr>
+        <tr>
+            <td><%= f.submit %></td>
+        </tr>
+        <tr>
+            <td><b><%= link_to "Back", users_path %></b></td>
+        </tr>
+    </table>
+<% end %>
