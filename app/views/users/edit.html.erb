@@ -1,13 +1,13 @@
 <center>
     <h1>Edit User Details</h1>
 
-    <%if flash[:errors] %>
+    <% if flash[:errors] %>
         <% flash[:errors].each do |error| %>
             <p style = "color:red"><%= error %></p>
-        <%end%>
-    <%end%>
+        <% end %>
+    <% end %>
 
-    <%= form_for @user do |f| %>
+    <%= simple_form_for @user do |f| %>
         <table cellpadding="15px">
             <tr>
                 <td><%= f.label :name %></td>
@@ -43,12 +43,19 @@
                     <%= f.label "I agree to the terms & conditions." %>
                 </td>
             </tr>
+            <tbody class="friends">
+                <%= f.simple_fields_for :friends do |builder| %>
+                    <%= render 'friend_fields', f: builder %>
+                <% end %>
+            </tbody>
+
             <tr>
                 <td><%= f.submit %></td>
+                <td><%= link_to_add_association 'Add Friend', f, :friends, data: { association_insertion_node: '.friends', association_insertion_method: :append } %></td>
             </tr>
             <tr>
                 <td><b><%= link_to "Back", users_path %></b></td>
             </tr>
         </table>
-    <%end%>
+    <% end %>
 </center>

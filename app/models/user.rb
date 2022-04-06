@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  has_many :friends, dependent: :destroy
+  accepts_nested_attributes_for :friends, reject_if: :all_blank, allow_destroy: true
+
   validates_presence_of :name, :email, :phone, :dob, :course, :start_date, :end_date
   validates :email, uniqueness: true
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, unless: Proc.new { |a| a.email.blank? }
