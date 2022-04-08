@@ -1,4 +1,11 @@
 class ApplicationController < ActionController::Base
+  include Pundit
+  protect_from_forgery with: :exception
+
+  rescue_from Pundit::NotAuthorizedError do 
+    redirect_to root_url, alert: 'You do not have access to this page'
+  end
+  
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   helper_method :current_user
   
@@ -13,8 +20,8 @@ class ApplicationController < ActionController::Base
   private
   def require_login
     unless logged_in?
-    flash[:notice] = "You must be logged in to access that section"
-    redirect_to '/login' # halts request cycle
+      flash[:notice] = "You must be logged in to access that section"
+      redirect_to '/login' # halts request cycle
     end
   end
 

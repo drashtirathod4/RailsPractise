@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :userarticles
   # breaking large route file into small one using draw()
   draw(:admin) # Will load another route file located in `config/routes/admin.rb`
 

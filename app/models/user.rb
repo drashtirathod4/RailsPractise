@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  has_many :userarticles
   has_many :articles
   has_many :events
   validates_presence_of :name, :email, :phone, :dob, :password, :course, :start_date, :end_date
