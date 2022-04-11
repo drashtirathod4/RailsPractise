@@ -1,10 +1,12 @@
 require "prawn"
 class UsersController < ApplicationController
   # before filter
-  before_action :require_login, only: [:update, :destroy]
+  before_action :require_login, only: [:update, :destroy, :welcome]
 
   def index
-    @users = User.all()
+    @users = policy_scope(User)
+    # authorize @users
+    @articles = policy_scope(Userarticle).reverse
   end
 
   def show
@@ -35,10 +37,12 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    authorize @user
   end
 
   def update 
     @user = User.find(params[:id])
+    authorize @user
     @user.update(user_params)
     if @user.valid?
       redirect_to user_path
@@ -50,12 +54,14 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
+    authorize @user
     @user.destroy
     redirect_to users_path
   end
 
   def welcome
     @current_user = current_user
+    @articles = policy_scope(Userarticle).reverse
   end
 
   def profile
@@ -63,7 +69,7 @@ class UsersController < ApplicationController
 
   private 
   def user_params
-    params.require(:user).permit(:name, :email, :phone, :dob, :agreement, :password, :password_confirmation, :course, :start_date, :end_date)
+    params.require(:user).permit(:name, :email, :phone, :dob, :agreement, :password, :password_confirmation, :course, :start_date, :end_date, :role)
   end
 
   def generate_pdf(user)

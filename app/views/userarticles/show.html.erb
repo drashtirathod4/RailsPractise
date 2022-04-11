@@ -1,2 +1,7 @@
-<h1>Userarticles#show</h1>
-<p>Find me in app/views/userarticles/show.html.erb</p>
+<center>
+    <h1>Article Details</h1><br><br>
+    <h3>Article Name : <%= @article.title %></h3>
+    <h3>Author Name : <%= @article.user.name %></h3>
+    <h3>Published : <%= @article.published %></h3>
+    <b><%= link_to "Back", welcome_path %></b>
+</center>

@@ -18,6 +18,10 @@
                 <td><%= f.text_field :phone %></td>
             </tr>
             <tr>
+                <td><%= f.label :role %></td>
+                <td><%= f.select :role, ['Admin', 'User'] %></td>
+            </tr>
+            <tr>
                 <td><%= f.label :Email %></td>
                 <td><%= f.email_field :email %></td>
             </tr>

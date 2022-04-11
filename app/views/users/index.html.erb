@@ -10,6 +10,7 @@
         <td><b>User Name</b></td>
         <td><b>Phone Number</b></td>
         <td><b>Email</b></td>
+        <td><b>Role</b></td>
         <td><b>DOB</b></td>
         <td><b>Course</b></td>
         <td><b>Start Date</b></td>
@@ -23,16 +24,39 @@
         <td><b><%= user.name %></b></td>
         <td><%= user.phone %></td>
         <td><%= user.email %></td>
+        <td><%= user.role %></td>
         <td><%= user.dob %></td>
         <td><%= user.course %></td>
         <td><%= user.start_date %></td>
         <td><%= user.end_date %></td>
         <td><%= button_to "View", user_path(user), method: :get %></td>
-        <td><%= button_to "Edit", edit_user_path(user), method: :get %></td>
-        <td><%= button_to 'Remove', user_path(user), method: 'delete' %></td>
+        <td><%= button_to "Edit", edit_user_path(user), method: :get if policy(user).update? %></td>
+        <td><%= button_to 'Remove', user_path(user), method: 'delete' if policy(user).destroy? %></td>
       </tr>
     <% end %>
   </table><br><br>
   <%= button_to "Signup", new_user_path, method: :get %><br>
-  <%= button_to "Login", login_path, method: :get %>
+  <%= button_to "Login", login_path, method: :get %><br><br>
+
+  <h1>List of all Articles</h1>
+  <table cellpadding="15px" border="1px">
+      <tr>
+          <td><b>Article Name</b></td>
+          <td><b>Author Name</b></td>
+          <td><b>Published</b></td>
+          <td><b>View</b></td>
+          <td><b>Edit</b></td>
+          <td><b>Remove</b></td>
+      </tr>
+      <% @articles.each do |article| %>
+          <tr>
+              <td><b><%= article.title %></b></td>
+              <td><%= article.user.name %></td>
+              <td><%= article.published %></td>
+              <td><%= button_to "View", userarticle_path(article), method: :get %></td>
+              <td><%= button_to "Edit", edit_userarticle_path(article), method: :get  if policy(article).update? %></td>
+              <td><%= button_to 'Remove', userarticle_path(article), method: 'delete' if policy(article).destroy? %></td>
+          </tr>
+      <% end %>
+  </table><br><br>
 </center>
