@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   validates :course, inclusion: {in: %w{Python ROR}, message: " can't be the value %{value} inserted!"}, unless: Proc.new { |a| a.course.blank? }
   validate :end_after_start
+  after_create :create_tenant
 
   def dob_cannot_be_in_the_future
       if dob.present? && dob > Date.today
@@ -21,4 +22,8 @@ class User < ApplicationRecord
       errors.add(:end_date, "must be after the start date") 
     end 
   end
+
+  def create_tenant 
+    Apartment::Tenant.create(subdomain) 
+  end 
 end
