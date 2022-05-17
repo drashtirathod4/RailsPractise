@@ -1,0 +1,140 @@
+/graphql_users : query_type -> To return all users
+{
+  graphqlUsers {
+    name
+    email
+    postsCount
+  }
+}
+
+
+/graphql_user/:id : query_type -> To return sepcific user or user show page
+{
+  graphqlUser(id:2) {
+    name
+    email
+    posts {
+      title
+      body
+    }
+  }
+}
+
+
+createGraphqlUser mutation format -> To create user
+mutation {
+  createGraphqlUser(input:{
+    name: "abc"
+    email: "abc@mail.com"
+  }) {
+    user {
+      id,
+      name,
+      email
+    }
+    errors
+  }
+}
+
+
+editGraphqlUser mutation format -> To edit user
+mutation {
+  editGraphqlUser(input:{
+    id: 13
+    name: "abc"
+    email: "abc@gmail.com"
+  }) {
+    user {
+      id,
+      name,
+      email
+    }
+    errors
+  }
+}
+
+
+DeleteGraphqlUser mutation format -> To delete user
+mutation {
+  deleteGraphqlUser(input:{
+    id: 9
+  }) {
+    user {
+      id,
+      name,
+      email
+    }
+    errors
+    message
+  }
+}
+
+
+
+
+
+/user/:id/posts : query_type -> To return all posts of specific user
+{
+  posts(graphqlUserId: 5) {
+    title
+    body
+  }
+}
+
+/user/:id/post/:id : query_type -> To return sepcific post or post show page of specific user
+{
+  post(graphqlUserId: 5, id: 27) {
+    title
+    body
+  }
+}
+
+
+createPost mutation format -> To create post
+mutation {
+  createPost(input:{
+    graphqlUserId: 5
+    title: "abc"
+    body: "abc post body"
+  }) {
+    post {
+      id,
+      title,
+      body
+    }
+    errors
+  }
+}
+
+
+editPost mutation format -> To edit post
+mutation {
+  editPost(input:{
+    id: 13
+    title: "abc"
+    body: "abc@gmail.com"
+  }) {
+    post {
+      id,
+      title,
+      body
+    }
+    errors
+  }
+}
+
+
+DeletePost mutation format -> To delete post
+mutation {
+  deletePost(input: {
+    id: 28
+  }) {
+    post {
+      id,
+      title,
+      body
+    }
+    errors
+    message
+  }
+}
