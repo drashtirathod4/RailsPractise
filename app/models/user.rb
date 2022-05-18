@@ -2,7 +2,7 @@ class User < ApplicationRecord
   validates_presence_of :name, :email, :phone, :dob, :course, :start_date, :end_date
   validates :email, uniqueness: true
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, unless: Proc.new { |a| a.email.blank? }
-  validates :phone, numericality: true, length: { is: 10 }, unless: Proc.new { |a| a.phone.blank? }
+  validates :phone, phone: true
   validate :dob_cannot_be_in_the_future
   validates :agreement, acceptance: {message: ": You cannot proceed without accepting Terms & Conditions!" }, allow_nil: false
 

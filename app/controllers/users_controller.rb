@@ -14,6 +14,8 @@ class UsersController < ApplicationController
   def create
     user = User.create(user_params)
     if user.valid?
+      message = "Hello #{user.name}, Welcome to our site!"
+      TwilioClient.new.send_text(user, message)
       redirect_to users_path
     else 
       flash[:errors] = user.errors.full_messages
