@@ -1,0 +1,22 @@
+<div id="<%= dom_id product %>">
+  <p>
+    <strong>Name :</strong>
+    <%= product %>
+  </p>
+
+  <p>
+    <strong>Price :</strong>
+    <%= number_to_currency(product.price) %>
+  </p>
+
+  <p>
+    <strong>Payment :</strong>
+    <%# <%= link_to "Buy Now!", checkout_create_path(id: product.id), method: :post, remote: true %> 
+    <%= button_to "Buy now!", checkout_create_path(:format => :js), form: { "data-type" => "script" }, params: {id: product.id}, remote: true %>
+  </p>
+
+  <p>
+    <strong>Sales Count :</strong>
+    <%= product.sales_count %>
+  </p>
+</div>
