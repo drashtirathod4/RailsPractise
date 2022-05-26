@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  resources :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  root "products#index"
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  post "checkout/create", to: "checkout#create"
+  resources :products
+  resources :users
+  resources :webhooks, only: [:create]
 end
