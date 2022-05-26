@@ -1,0 +1,12 @@
+<div id="<%= dom_id bullet_post %>">
+  <p>
+    <strong>Name :</strong>
+    <%= bullet_post.name %>
+  </p>
+
+  <p>
+    <strong>Comments :</strong>
+    <%= bullet_post.comments.map(&:name) %>
+  </p>
+
+</div>

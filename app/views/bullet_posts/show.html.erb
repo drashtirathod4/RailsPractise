@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @bullet_post %>
+
+<div>
+  <%= link_to "Edit this bullet post", edit_bullet_post_path(@bullet_post) %> |
+  <%= link_to "Back to bullet posts", bullet_posts_path %>
+
+  <%= button_to "Destroy this bullet post", @bullet_post, method: :delete %>
+</div>

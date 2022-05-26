@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+<%= javascript_pack_tag 'test', 'data-turbolinks-track': 'reload' %>
+<h1>Bullet posts</h1>
+
+<div id="bullet_posts">
+  <% @bullet_posts.each do |bullet_post| %>
+    <%= render bullet_post %>
+    <p>
+      <%= link_to "Show this bullet post", bullet_post %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New bullet post", new_bullet_post_path %>
