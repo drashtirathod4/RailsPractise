@@ -1,5 +1,12 @@
-<h1 align="center">List of Users</h1>
-<table align="center" cellpadding="15px" border="1px">
+<center>
+  <h1>List of Users</h1><br>
+
+  <%= form_tag users_path, method: :get do |f| %>
+    <%= text_field_tag :email, params[:email] %>
+    <%= button_tag "Search" %>
+  <% end %><br><br>
+
+  <table cellpadding="15px" border="1px">
     <tr>
       <td><b>User Name</b></td>
       <td><b>Phone Number</b></td>
@@ -13,20 +20,21 @@
       <td><b>Remove</b></td>
     </tr>
     <% @users.each do |user| %>
+      <tr>
+        <td><b><%= user.name %></b></td>
+        <td><%= user.phone %></td>
+        <td><%= user.email %></td>
+        <td><%= user.dob %></td>
+        <td><%= user.course %></td>
+        <td><%= user.start_date %></td>
+        <td><%= user.end_date %></td>
+        <td><%= button_to "View", user_path(user), method: :get %></td>
+        <td><%= button_to "Edit", edit_user_path(user), method: :get %></td>
+        <td><%= button_to 'Remove', user_path(user), method: 'delete' %></td>
+      </tr>
+    <% end %>
     <tr>
-      <td><b><%= user.name %></b></td>
-      <td><%= user.phone %></td>
-      <td><%= user.email %></td>
-      <td><%= user.dob %></td>
-      <td><%= user.course %></td>
-      <td><%= user.start_date %></td>
-      <td><%= user.end_date %></td>
-      <td><%= button_to "View", user_path(user), method: :get %></td>
-      <td><%= button_to "Edit", edit_user_path(user), method: :get %></td>
-      <td><%= button_to 'Remove', user_path(user), method: 'delete' %></td>
+      <td colspan="10" align="center"><%= button_to "Add new User", new_user_path, method: :get%></td>
     </tr>
-  <% end %>
-  <tr>
-    <td colspan="10" align="center"><%= button_to "Add new User", new_user_path, method: :get%></td>
-  </tr>
-</table>
+  </table>
+</center>
