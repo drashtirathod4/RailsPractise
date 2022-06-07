@@ -1,6 +1,28 @@
 class UsersController < ApplicationController
   def index
-    @users = User.all()
+    @search = User.search do
+      fulltext params[:search]
+      # field facet
+      facet(:name)
+      with(:name, params[:name]) if params[:name].present?
+
+      # query facet based on score by each user
+      facet(:score) do
+        row(0..10) do
+          with(:score, 0..10)
+        end
+        row(11..20) do
+          with(:score, 11..20)
+        end
+        row(21..30) do
+          with(:score, 21..30)
+        end
+      end
+
+      # range facet, based on score 
+      facet :score, :range => 0..100, :range_interval => 5
+    end
+    @users = @search.results
   end
 
   def show
@@ -44,6 +66,6 @@ class UsersController < ApplicationController
 
   private 
   def user_params
-    params.require(:user).permit(:name, :email, :phone, :dob, :agreement, :course, :start_date, :end_date)
+    params.require(:user).permit(:name, :email, :score, :phone, :dob, :agreement, :course, :start_date, :end_date)
   end
 end

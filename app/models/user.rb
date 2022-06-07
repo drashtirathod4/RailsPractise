@@ -9,6 +9,23 @@ class User < ApplicationRecord
   validates :course, inclusion: {in: %w{Python ROR}, message: " can't be the value %{value} inserted!"}, unless: Proc.new { |a| a.course.blank? }
   validate :end_after_start
 
+  # define attributes inside searchable class(which you want to search by) so that it knows what to index
+  searchable do
+    # text to define full-text searchable attributes!
+    # boost is for providing a value such as 5 and it will mean that any keywords found in the name of the user will be five times more important than the keywords inside the email
+    text :name, boost: 5
+    text :email, :birth_year
+    string :dob
+    integer :score
+  end
+
+  def birth_year 
+    dob.strftime("%B %Y")
+  end
+
+  # sunspot will automatically index any new records that you create however if you have some existing records already ..
+  # in the database you'll need to reindex those & you can do that by calling rake sunspot:reindex to include those & make them searchable!
+
   def dob_cannot_be_in_the_future
       if dob.present? && dob > Date.today
         errors.add(:dob, "Birthdate can't be in future!")
