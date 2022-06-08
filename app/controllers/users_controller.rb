@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def index
-    @users = User.all()
+    @users = User.text_search(params[:query])
   end
 
   def show

@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_22_041728) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_07_115317) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+  enable_extension "unaccent"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -90,6 +94,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_22_041728) do
     t.index ["reset_password_token"], name: "index_my_users_on_reset_password_token", unique: true
   end
 
+  create_table "pg_search_documents", force: :cascade do |t|
+    t.text "content"
+    t.string "searchable_type"
+    t.bigint "searchable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.integer "user_id", null: false
@@ -111,6 +124,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_22_041728) do
     t.date "start_date"
     t.date "end_date"
     t.string "document"
+    t.index "to_tsvector('english'::regconfig, (email)::text)", name: "users_email", using: :gin
+    t.index "to_tsvector('english'::regconfig, (name)::text)", name: "users_name", using: :gin
+    t.index ["name"], name: "index_users_on_name"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
