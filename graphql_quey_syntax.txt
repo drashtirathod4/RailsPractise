@@ -1,0 +1,204 @@
+# my_authors
+{
+  myAuthors{
+    name
+    myArticlesCount
+    myArticles {
+    	title
+      description
+    }
+  }
+}
+
+# my_author(id)
+{
+  myAuthor(id: 2){
+    name
+    myArticlesCount
+    myArticles {
+    	title
+      description
+    }
+  }
+}
+
+# new Author create 
+mutation{
+  createMyAuthor(input:{
+    name:"Test"
+  }) {
+   author {
+    	id,
+    	name
+  	}
+    errors
+	}
+} 
+
+# update author
+mutation{
+  updateMyAuthor(input:{
+    id: 1
+    name:"Article 1"
+  }) {
+   author {
+    	name
+  	}
+    errors
+	}
+}
+
+# Delete Author
+mutation{
+  deleteMyAuthor(input:{
+    id: 5
+  }) {
+    errors
+    message
+	}
+}
+
+
+# my_articles
+{
+  myArticles{
+    title
+    description
+    myAuthorId
+  }
+}
+
+# my_article(id)
+{
+  myArticle(id: 2){
+    title
+    description
+    myAuthorId
+  }
+}
+
+# new article create
+mutation{
+  createMyArticle(input:{
+    title:"Test Article"
+    description:"Test Description"
+    myAuthorId: 1
+  }) {
+   article {
+    	title,
+    	description
+  	}
+    errors
+	}
+}
+
+# Update Article
+mutation{
+  updateMyArticle(input:{
+    id: 3
+    title:"Edited Title"
+    description:"Edited"
+  }) {
+   article {
+    	title
+    	description
+  	}
+    errors
+	}
+}
+
+# Delete Article
+mutation{
+  deleteMyArticle(input:{
+    id: 5
+  }) {
+    errors
+    message
+	}
+}
+
+
+# Aliases Example :
+{
+  myArticles{
+    Article_Title: title
+    description
+  }
+}
+
+# Operation name example :
+# "firstQuery" and "secondQuery" are the operation names
+query firstQuery{ 
+	myAuthor(id: 2){
+    id
+    authorName: name
+    allArticles: myArticles{
+      title
+    }
+  }
+}
+
+query secondQuery{ 
+	myAuthor(id: 3){
+    id
+    authorName: name
+    allArticles: myArticles{
+      title
+    }
+  }
+}
+
+# Variables Example :
+query Author($authorId: ID!){ 
+	myAuthor(id: $authorId){
+    id
+    authorName: name
+    allArticles: myArticles{
+      title
+    }
+  }
+}
+-> Exclamation mark here for not null - The id shouldn't be null.
+-> pass query variable like this "Query Variables" section on graphql video
+{
+  "authorId": 2
+}
+
+# Fragments example
+query firstQuery{ 
+	myAuthors {
+    ... AuthorDetails
+  }
+}
+
+query secondQuery{ 
+	myAuthors{
+    ... AuthorDetails
+  }
+}
+
+fragment AuthorDetails on MyAuthor{
+  id
+  authorName: name
+  allArticles: myArticles{
+    title
+    description
+  }
+}
+
+# Directives Example
+# @include
+{
+	myArticles {
+    title
+    description @include(if: true)
+  }
+}
+
+# @skip
+{
+	myArticles {
+    title
+    description @skip(if: true)
+  }
+}
