@@ -6,5 +6,7 @@ module Types
     field :update_my_article, mutation: Mutations::UpdateMyArticle
     field :delete_my_author, mutation: Mutations::DeleteMyAuthor
     field :delete_my_article, mutation: Mutations::DeleteMyArticle
+    field :create_my_user, mutation: Mutations::CreateMyUser
+    field :sign_in_my_user, mutation: Mutations::SignInMyUser
   end
 end

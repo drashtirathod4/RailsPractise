@@ -202,3 +202,121 @@ fragment AuthorDetails on MyAuthor{
     description @skip(if: true)
   }
 }
+
+# Introspection
+# To see which types are available
+{
+  __schema {
+    types {
+      name
+    }
+  }
+} 
+
+# To see what queries are available
+{
+  __schema {
+    queryType {
+      name
+    }
+  }
+} 
+
+# To examine one specific type 
+# kind to know is it an interface or an object?
+{
+  __type(name: "MyAuthor") {
+    name
+    kind 
+  }
+}
+
+# To know what fields are available?
+{
+  __type(name: "MyAuthor") {
+    name
+    fields {
+      name
+      type {
+        name
+        kind
+      }
+    }
+  }
+}
+
+# To ask the system for documentation
+{
+  __type(name: "MyAuthor") {
+    name
+    description
+  }
+}
+
+# Pagination query
+{
+  myAuthorsConnection(first:5, before: "Ng==") {
+    totalCount
+    pageInfo {
+      endCursor
+      startCursor
+      hasPreviousPage
+      hasNextPage
+    }
+    edges {
+      cursor
+      node {
+        name
+        myArticles {
+          title
+          description
+        }
+      }
+    }
+  }
+}
+
+
+# ------------------------------- Authorization in GraphQL ---------------------------------------
+
+# create new user
+mutation {
+  createMyUser(
+    name: "Drashti",
+    authProvider: {
+      credentials: {
+        email: "drashti@mail.com",
+        password: "123456"
+      }
+  	}
+  ) {
+    id
+    name
+    email
+  }
+}
+
+# ------------------ To sign in the user -------------------- 
+mutation {
+  signInMyUser (
+    credentials: {
+      email: "drashti@mail.com",
+      password: "123456"
+    }
+  ) {
+    token
+    myUser {
+      id
+    }
+  }
+}
+
+--> It will return this as a result :
+{
+  "data": {
+    "signInMyUser": {
+      "token": "H0Q1S5jVIhF3AQDZ6SVJXOa72A==--RugVBwgq4KmaNhmc--di9zWGT5CYPcZEuEItt8ng==",
+      "myUser": null
+    }
+  }
+}
