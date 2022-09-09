@@ -11,6 +11,13 @@ module Types
       MyAuthor.all
     end
 
+    # cursor type pagination
+    field :my_authors_connection, Types::MyAuthorsConnection, null: false
+
+    def my_authors_connection(**_args)
+      MyAuthor.all
+    end
+
     # /my_author/:id
     field :my_author, Types::MyAuthorType, null: false do
       argument :id, ID, required: true
