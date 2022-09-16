@@ -4,6 +4,9 @@ module Types
     include GraphQL::Types::Relay::HasNodeField
     include GraphQL::Types::Relay::HasNodesField
 
+    # /my_review
+    field :my_review, resolver: Resolvers::MyReviewResolver
+
     # /my_authors
     field :my_authors, [Types::MyAuthorType], null: false
 

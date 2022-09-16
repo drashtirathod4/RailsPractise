@@ -60,11 +60,14 @@ mutation{
 
 
 # my_articles
-{
-  myArticles{
+query{
+  myArticles {
+    id
     title
     description
-    myAuthorId
+    myAuthor {
+      name
+    }
   }
 }
 
@@ -105,6 +108,18 @@ mutation{
   	}
     errors
 	}
+}
+
+# update Article
+mutation {
+  updateMyArticle(id: 1, title: "abc", description: "abc") {
+    article {
+      id,
+      title,
+      description
+    }
+    errors
+  }
 }
 
 # Delete Article
@@ -320,3 +335,137 @@ mutation {
     }
   }
 }
+
+# create link 
+mutation {
+  createLink( 
+    url: "http://localhost:3000/graphiql",
+    description: "Testing Playground"
+  ) {
+    id
+    url
+    description
+    postedBy {
+      id
+      name
+    }
+  }
+}
+
+# MyReview 
+{
+	myReview(myReviewId: 1) {
+    id 
+    body
+    title
+  }
+}
+
+--> It will return this if user is not logged in
+{
+  "data": {
+    "myReview": null
+  },
+  "errors": [
+    {
+      "message": "login required!!",
+      "locations": [
+        {
+          "line": 2,
+          "column": 2
+        }
+      ],
+      "path": [
+        "myReview"
+      ]
+    }
+  ]
+}
+
+# Update MyReview
+mutation{
+	updateMyReview(myReviewId: 1, title: "Review 1", body: "Body") {
+    id 
+    body
+    title
+  }
+}
+
+--> If currently logged user is not admin it'll return "permission denied" error or will update the review.
+{
+  "data": null,
+  "errors": [
+    {
+      "message": "Permission denied!!",
+      "locations": [
+        {
+          "line": 2,
+          "column": 2
+        }
+      ],
+      "path": [
+        "updateMyReview"
+      ]
+    }
+  ]
+}
+
+--> Or if the user is not logged in it'll return "login require" error.
+
+
+
+# I want this query to be returned only when the data I own (Authorization)
+# You can only view your own reviews
+{
+	myReview(myReviewId: 1) {
+    id 
+    body
+    title
+  }
+}
+
+--> If the fetched review is not currently logged in user's review then it will return this error
+{
+  "data": {
+    "myReview": null
+  },
+  "errors": [
+    {
+      "message": "Permission denied!!",
+      "locations": [
+        {
+          "line": 2,
+          "column": 2
+        }
+      ],
+      "path": [
+        "myReview"
+      ]
+    }
+  ]
+}
+
+
+# Field is returned only when the logged-in user's own data (Authorization)
+# In the previous example, I defined MyReviewType so that I can only see the entire response for my data. However, there may be times when you want to hide only certain fields, not all.
+{
+	myReview(myReviewId: 2) {
+    id 
+    body
+    title
+    secret
+  }
+}
+
+--> If the review that i'm fetching is not of currently logged in user's data then the secret field value will not be shown and instad null will be shown. Otherwise secret value will be visible to user
+{
+  "data": {
+    "myReview": {
+      "id": "2",
+      "body": "Body 2",
+      "title": "Review 2",
+      "secret": null
+    }
+  }
+}
+

@@ -5,6 +5,10 @@ ruby "3.0.3"
 
 gem 'bcrypt', '~> 3.1.13'
 
+gem "rolify"
+
+gem 'pry'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.1"
 

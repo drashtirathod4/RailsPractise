@@ -20,6 +20,10 @@ module Mutations
             crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
             token = crypt.encrypt_and_sign("user-id:#{user.id}")
 
+            # token = AuthToken.token_for_my_user(user)
+
+            context[:session][:token] = token
+
             { user: user, token: token }
         end
     end
