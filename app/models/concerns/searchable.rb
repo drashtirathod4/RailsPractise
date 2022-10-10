@@ -77,17 +77,7 @@ module Searchable
                 highlight: { fields: { name: {}, email: {}, course: {} } }
             }
 
-            search_definition = {
-                'name-suggest' => {
-                    text: query,
-                    completion: {
-                        field: 'suggest'
-                    }
-                }
-            }
-
             self.__elasticsearch__.search(params)
-            # self.__elasticsearch__.client.perform_request('GET', "#{index_name}/_suggest", {}, )
         end
     end
 end

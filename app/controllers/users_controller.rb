@@ -1,11 +1,5 @@
 class UsersController < ApplicationController
   def index
-    # @users = User.search((params[:query].present? ? params[:query] : '*')).records
-    # if params[:q].present?
-    #   @users = User.search(params[:q]).records.where(course: "ROR")
-    # else
-    #   @users = User.all
-    # end
     if params[:query].present?
       @users = User.search(params[:query], fields: [{email: :text_middle}, {course: :text_middle}, {name: :text_middle}])
     else

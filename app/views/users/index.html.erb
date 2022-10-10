@@ -5,53 +5,53 @@
     text-align: left;
   }
 
-.typeahead,
-.tt-query,
-.tt-hint {
-  width: 396px;
-  height: 30px;
-  padding: 8px 12px;
-  font-size: 24px;
-  line-height: 30px;
-  border: 2px solid #ccc;
-  -webkit-border-radius: 8px;
-     -moz-border-radius: 8px;
-          border-radius: 8px;
-  outline: none;
-}
+  .typeahead,
+  .tt-query,
+  .tt-hint {
+    width: 396px;
+    height: 30px;
+    padding: 8px 12px;
+    font-size: 24px;
+    line-height: 30px;
+    border: 2px solid #ccc;
+    -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+            border-radius: 8px;
+    outline: none;
+  }
 
-.typeahead {
-  background-color: #fff;
-}
+  .typeahead {
+    background-color: #fff;
+  }
 
-.typeahead:focus {
-  border: 2px solid #0097cf;
-}
+  .typeahead:focus {
+    border: 2px solid #0097cf;
+  }
 
-.tt-query {
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-}
+  .tt-query {
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+      -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  }
 
-.tt-hint {
-  color: #999
-}
+  .tt-hint {
+    color: #999
+  }
 
-.tt-menu {
-  width: 422px;
-  margin: 12px 0;
-  padding: 8px 0;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  -webkit-border-radius: 8px;
-     -moz-border-radius: 8px;
-          border-radius: 8px;
-  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-          box-shadow: 0 5px 10px rgba(0,0,0,.2);
-}
+  .tt-menu {
+    width: 422px;
+    margin: 12px 0;
+    padding: 8px 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+            border-radius: 8px;
+    -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+      -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+            box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  }
 
   .tt-suggestion {
     padding: 3px 20px;
@@ -90,14 +90,6 @@
 </style>
 <center>
   <h1>List of Users</h1>
-  <!-- <div class="col-4" id="bloodhound" >
-    <%= form_tag users_path, :method => 'get' ,local:true do %>
-      <%= text_field_tag :query, params[:query], id:"query", class:"typeahead", placeholder: 'Search email is present or not' %>
-        <span>
-          <%= submit_tag "search"%>
-        </span>
-    <% end %>
-  </div>-->
   <div id="bloodhound">
     <%= form_tag users_path, method: :get, local: true do |f| %>
       <%= text_field_tag :query, params[:query], id: "query", autocomplete: 'off', class:"typeahead", placeholder: 'Search' %>
@@ -151,7 +143,7 @@
   });
   $('#query').typeahead(null, {
     highlight: true,
-    minLength: 1,
+    hint: true,
     source: users
   });
 </script>
