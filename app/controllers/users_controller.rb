@@ -1,6 +1,16 @@
 class UsersController < ApplicationController
   def index
-    @users = User.all()
+    # @users = User.search((params[:query].present? ? params[:query] : '*')).records
+    # if params[:q].present?
+    #   @users = User.search(params[:q]).records.where(course: "ROR")
+    # else
+    #   @users = User.all
+    # end
+    if params[:query].present?
+      @users = User.search(params[:query], fields: [{email: :text_middle}, {course: :text_middle}, {name: :text_middle}])
+    else
+      @users = User.all
+    end
   end
 
   def show
@@ -40,6 +50,24 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
     redirect_to users_path
+  end
+
+  def autocomplete
+    # render json: User.search(params[:query], {
+    #   fields: ["name", "email", "course"],
+    #   match: :word_start,
+    #   limit: 10,
+    #   load: false,
+    #   misspellings: {below: 5}
+    # }).map(&:name)
+    render json: User.search(params[:query], {
+      fields: ["email", "course", "name"],
+      match: :text_middle,
+      limit: 10,
+      load: false,
+      misspellings: {below: 5}
+    }).map(&:name)
+    # render json: User.search(params[:query], fields: ["email", "course", "name"], match: :text_middle, limit: 10, load: false, misspellings: {below: 5}).map(&:name)
   end
 
   private 
