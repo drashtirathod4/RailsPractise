@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_06_083352) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_27_092049) do
   create_table "ads", force: :cascade do |t|
     t.string "ad_name"
     t.integer "magazine_id", null: false
@@ -94,6 +94,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_06_083352) do
     t.index ["reset_password_token"], name: "index_jwt_users_on_reset_password_token", unique: true
   end
 
+  create_table "links", force: :cascade do |t|
+    t.string "url"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "my_user_id"
+    t.index ["my_user_id"], name: "index_links_on_my_user_id"
+  end
+
   create_table "magazines", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
@@ -104,6 +113,56 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_06_083352) do
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "my_articles", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "my_author_id"
+    t.index ["my_author_id"], name: "index_my_articles_on_my_author_id"
+  end
+
+  create_table "my_authors", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "my_reviews", force: :cascade do |t|
+    t.string "title"
+    t.string "body"
+    t.integer "my_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "secret"
+    t.index ["my_user_id"], name: "index_my_reviews_on_my_user_id"
+  end
+
+  create_table "my_users", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "my_users_roles", id: false, force: :cascade do |t|
+    t.integer "my_user_id"
+    t.integer "role_id"
+    t.index ["my_user_id", "role_id"], name: "index_my_users_roles_on_my_user_id_and_role_id"
+    t.index ["my_user_id"], name: "index_my_users_roles_on_my_user_id"
+    t.index ["role_id"], name: "index_my_users_roles_on_role_id"
+  end
+
+  create_table "pg_search_documents", force: :cascade do |t|
+    t.text "content"
+    t.string "searchable_type"
+    t.integer "searchable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -154,18 +213,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_06_083352) do
     t.date "start_date"
     t.date "end_date"
     t.string "password_digest"
+    t.integer "score"
     t.index ["email"], name: "index_users_on_email"
-  end
-
-  create_table "users_roles", id: false, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "role_id"
-    t.index ["role_id"], name: "index_users_roles_on_role_id"
-    t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
-    t.index ["user_id"], name: "index_users_roles_on_user_id"
+    t.index ["name"], name: "index_users_on_name"
+    t.index ["score"], name: "index_users_on_score"
   end
 
   add_foreign_key "ads", "magazines"
   add_foreign_key "articles", "users"
+  add_foreign_key "links", "my_users"
+  add_foreign_key "my_reviews", "my_users"
   add_foreign_key "posts", "graphql_users"
 end
