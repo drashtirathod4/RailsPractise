@@ -85,14 +85,22 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    /* margin-bottom: 50px; */
-  }
+    margin-bottom: 50px;
+  } 
 </style>
 <center>
   <h1>List of Users</h1>
-  <div id="query">
+  <!-- <div class="col-4" id="bloodhound" >
+    <%= form_tag users_path, :method => 'get' ,local:true do %>
+      <%= text_field_tag :query, params[:query], id:"query", class:"typeahead", placeholder: 'Search email is present or not' %>
+        <span>
+          <%= submit_tag "search"%>
+        </span>
+    <% end %>
+  </div>-->
+  <div id="bloodhound">
     <%= form_tag users_path, method: :get, local: true do |f| %>
-      <%= text_field_tag :query, params[:query], autocomplete: :on, class:"typeahead", placeholder: 'Search' %>
+      <%= text_field_tag :query, params[:query], id: "query", autocomplete: 'off', class:"typeahead", placeholder: 'Search' %>
       <%= button_tag "Search", name: nil, id: "search" %>
     <% end %><br><br>
   </div>
@@ -132,21 +140,18 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <%= render 'typeahead' %>
 <script>
-    var users = new Bloodhound({
-      datumTokenizer: Bloodhound.tokenizers.whitespace,
-      queryTokenizer: Bloodhound.tokenizers.whitespace,
-      remote: {
-        url: '/users/autocomplete?query=%QUERY',
-        wildcard: '%QUERY'
-      }
-    });
-    $('#query .typeahead').typeahead({
-      hint: true,
-      highlight: true,
-      minLength: 1
-    },
-    {
-      name: 'users',
-      source: users
-    });
+    //-------------------autocomplete---------------------
+ var users = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.whitespace,
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    remote: {
+      url: '/users/autocomplete?query=%QUERY',
+      wildcard: '%QUERY'
+    }
+  });
+  $('#query').typeahead(null, {
+    highlight: true,
+    minLength: 1,
+    source: users
+  });
 </script>

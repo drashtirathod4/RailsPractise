@@ -60,14 +60,15 @@ class UsersController < ApplicationController
     #   load: false,
     #   misspellings: {below: 5}
     # }).map(&:name)
-    render json: User.search(params[:query], {
-      fields: ["email", "course", "name"],
-      match: :text_middle,
-      limit: 10,
-      load: false,
-      misspellings: {below: 5}
-    }).map(&:name)
-    # render json: User.search(params[:query], fields: ["email", "course", "name"], match: :text_middle, limit: 10, load: false, misspellings: {below: 5}).map(&:name)
+    # render json: User.search(params[:query], {
+    #   fields: ["name"],
+    #   match: :text_middle,
+    #   limit: 10,
+    #   load: false,
+    #   misspellings: {below: 5}
+    # }).map(&:name)
+
+    render json: User.search(params[:query], fields: ["name", "email", "course"], match: :text_middle, limit: 10, load: false, misspellings: {below: 5}).map(&:name)
   end
 
   private 

@@ -1,7 +1,7 @@
 class User < ApplicationRecord
-  searchkick text_middle: [:email, :course, :name]
+  searchkick text_middle: [:name, :email, :course]
 
-  include Searchable
+  # include Searchable
 
   # validates_presence_of :name, :email, :phone, :dob, :course, :start_date, :end_date
   # validates :email, uniqueness: true
@@ -24,13 +24,5 @@ class User < ApplicationRecord
     if end_date < start_date
       errors.add(:end_date, "must be after the start date") 
     end 
-  end
-
-  def search_data
-    {
-      name: name,
-      email: email,
-      course: course
-    }
   end
 end
