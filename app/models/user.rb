@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   searchkick text_middle: [:name, :email, :course]
 
-  # include Searchable
+  include Searchable
 
   # validates_presence_of :name, :email, :phone, :dob, :course, :start_date, :end_date
   # validates :email, uniqueness: true
