@@ -86,7 +86,7 @@
     display: inline-block;
     font-size: 16px;
     margin-bottom: 50px;
-  } 
+  }
 </style>
 <center>
   <h1>List of Users</h1>
@@ -111,11 +111,11 @@
       </tr>
       <% @users.each do |user| %>
       <tr>
-        <td><b><%= user.name %></b></td>
+        <td><b><%= user.try(:highlight).try(:name) ? user.highlight.name[0].html_safe : user.name %></b></td>
         <td><%= user.phone %></td>
-        <td><%= user.email %></td>
+        <td><%= user.try(:highlight).try(:email) ? user.highlight.email[0].html_safe : user.email %></td>
         <td><%= user.dob %></td>
-        <td><%= user.course %></td>
+        <td><%= user.try(:highlight).try(:course) ? user.highlight.course[0].html_safe : user.course %></td>
         <td><%= user.start_date %></td>
         <td><%= user.end_date %></td>
         <td><%= button_to "View", user_path(user), method: :get %></td>
@@ -142,8 +142,8 @@
     }
   });
   $('#query').typeahead(null, {
-    highlight: true,
     hint: true,
+    highlight: true,
     source: users
   });
 </script>

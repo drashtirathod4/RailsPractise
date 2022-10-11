@@ -25,4 +25,15 @@ class User < ApplicationRecord
       errors.add(:end_date, "must be after the start date") 
     end 
   end
+
+  # Delete the previous users index in Elasticsearch
+  User.__elasticsearch__.client.indices.delete index: User.index_name rescue nil
+
+  # Create the new index with the new mapping
+  User.__elasticsearch__.client.indices.create \
+  index: User.index_name,
+  body: { settings: User.settings.to_hash, mappings: User.mappings.to_hash }
+
+  # Index all User records from the DB to Elasticsearch
+  User.import
 end

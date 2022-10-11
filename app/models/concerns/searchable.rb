@@ -6,8 +6,8 @@ module Searchable
         include Elasticsearch::Model::Callbacks
 
         mapping do
-            indexes :name, type: :text
-            indexes :email, type: :text
+            indexes :name, type: :text, analyzer: 'english', index_options: 'offsets'
+            indexes :email, type: :text, analyzer: 'english'
         end
 
         def self.search(query, course = nil)
@@ -74,7 +74,21 @@ module Searchable
                         ],
                     }
                 },
-                highlight: { fields: { name: {}, email: {}, course: {} } }
+                # highlight: {
+                #     tags_schema: 'styled',
+                #     fields: {
+                #         content: {'force_source': true}
+                #     } 
+                # }
+                highlight: {
+                    pre_tags: ['<mark>'],
+                    post_tags: ['</mark>'],
+                    fields: {
+                        name: {},
+                        email: {},
+                        course: {}
+                    }
+                }
             }
 
             self.__elasticsearch__.search(params)
