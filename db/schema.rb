@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_27_092049) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_11_110951) do
   create_table "ads", force: :cascade do |t|
     t.string "ad_name"
     t.integer "magazine_id", null: false
@@ -214,6 +214,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_27_092049) do
     t.date "end_date"
     t.string "password_digest"
     t.integer "score"
+    t.integer "age"
     t.index ["email"], name: "index_users_on_email"
     t.index ["name"], name: "index_users_on_name"
     t.index ["score"], name: "index_users_on_score"

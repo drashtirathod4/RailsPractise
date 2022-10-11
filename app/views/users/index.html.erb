@@ -102,6 +102,7 @@
         <td><b>Phone Number</b></td>
         <td><b>Email</b></td>
         <td><b>DOB</b></td>
+        <td><b>Age</b></td>
         <td><b>Course</b></td>
         <td><b>Start Date</b></td>
         <td><b>End Date</b></td>
@@ -115,6 +116,7 @@
         <td><%= user.phone %></td>
         <td><%= user.try(:highlight).try(:email) ? user.highlight.email[0].html_safe : user.email %></td>
         <td><%= user.dob %></td>
+        <td><%= user.age %></td>
         <td><%= user.try(:highlight).try(:course) ? user.highlight.course[0].html_safe : user.course %></td>
         <td><%= user.start_date %></td>
         <td><%= user.end_date %></td>
