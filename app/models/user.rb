@@ -2,6 +2,7 @@ class User < ApplicationRecord
   searchkick text_middle: [:name, :email, :course]
 
   include Searchable
+  has_many :vehicles, dependent: :destroy
 
   # validates_presence_of :name, :email, :phone, :dob, :course, :start_date, :end_date
   # validates :email, uniqueness: true
@@ -27,13 +28,13 @@ class User < ApplicationRecord
   end
 
   # Delete the previous users index in Elasticsearch
-  User.__elasticsearch__.client.indices.delete index: User.index_name rescue nil
+  # User.__elasticsearch__.client.indices.delete index: User.index_name rescue nil
 
   # Create the new index with the new mapping
-  User.__elasticsearch__.client.indices.create \
-  index: User.index_name,
-  body: { settings: User.settings.to_hash, mappings: User.mappings.to_hash }
+  # User.__elasticsearch__.client.indices.create \
+  # index: User.index_name,
+  # body: { settings: User.settings.to_hash, mappings: User.mappings.to_hash }
 
   # Index all User records from the DB to Elasticsearch
-  User.import
+  # User.import
 end

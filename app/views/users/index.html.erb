@@ -104,6 +104,7 @@
         <td><b>DOB</b></td>
         <td><b>Age</b></td>
         <td><b>Course</b></td>
+        <%# <td><b>Vehicle</b></td> %>
         <td><b>Start Date</b></td>
         <td><b>End Date</b></td>
         <td><b>View</b></td>
@@ -118,6 +119,9 @@
         <td><%= user.dob %></td>
         <td><%= user.age %></td>
         <td><%= user.try(:highlight).try(:course) ? user.highlight.course[0].html_safe : user.course %></td>
+        <%# <td><% if user.vehicles.exists? %>
+          <%# <%= user.vehicles.pluck(:name) %>
+        <%# <% end %></td>
         <td><%= user.start_date %></td>
         <td><%= user.end_date %></td>
         <td><%= button_to "View", user_path(user), method: :get %></td>
@@ -126,7 +130,7 @@
       </tr>
     <% end %>
     <tr>
-      <td colspan="10" align="center"><%= button_to "Add new User", new_user_path, method: :get%></td>
+      <td colspan="12" align="center"><%= button_to "Add new User", new_user_path, method: :get%></td>
     </tr>
   </table>
 </center>

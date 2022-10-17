@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_11_110951) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_12_071704) do
   create_table "ads", force: :cascade do |t|
     t.string "ad_name"
     t.integer "magazine_id", null: false
@@ -220,9 +220,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_11_110951) do
     t.index ["score"], name: "index_users_on_score"
   end
 
+  create_table "vehicles", force: :cascade do |t|
+    t.string "name"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "level"
+    t.index ["user_id"], name: "index_vehicles_on_user_id"
+  end
+
   add_foreign_key "ads", "magazines"
   add_foreign_key "articles", "users"
   add_foreign_key "links", "my_users"
   add_foreign_key "my_reviews", "my_users"
   add_foreign_key "posts", "graphql_users"
+  add_foreign_key "vehicles", "users"
 end
