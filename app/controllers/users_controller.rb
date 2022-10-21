@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
   def index
-    @users = User.all()
+    if params[:query].present?
+      @users = User.search(params[:query], fields: [{email: :text_middle}, {course: :text_middle}, {name: :text_middle}])
+    else
+      @users = User.all
+    end
   end
 
   def show
@@ -42,8 +46,27 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
+  def autocomplete
+    # render json: User.search(params[:query], {
+    #   fields: ["name", "email", "course"],
+    #   match: :word_start,
+    #   limit: 10,
+    #   load: false,
+    #   misspellings: {below: 5}
+    # }).map(&:name)
+    # render json: User.search(params[:query], {
+    #   fields: ["name"],
+    #   match: :text_middle,
+    #   limit: 10,
+    #   load: false,
+    #   misspellings: {below: 5}
+    # }).map(&:name)
+
+    render json: User.search(params[:query], fields: ["name", "email", "course"], match: :text_middle, limit: 10, load: false, misspellings: {below: 5}).map(&:name)
+  end
+
   private 
   def user_params
-    params.require(:user).permit(:name, :email, :phone, :dob, :agreement, :course, :start_date, :end_date)
+    params.require(:user).permit(:name, :email, :phone, :dob, :agreement, :course, :start_date, :end_date, :age)
   end
 end
