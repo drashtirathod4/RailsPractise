@@ -22,26 +22,7 @@ module Searchable
             # size to define the size of results to return
             # to see next results make changes in from parameter and define the next index's number there
             # -----> modifying search method to search only for name field
-            # params = {
-            #     query: {
-            #         match: {
-            #             name: query
-            #         },
-            #     },
-            #     highlight: { 
-            #         pre_tags: ["<mark>"],
-            #         post_tags: ["</mark>"],
-            #         fields: { name: {}, email: {}, course: {} } 
-            #     },
-            #     size: 2,
-            #     from: 0
-            #     # from: 2  # to see next results
-            # }
-
-            # search_after
-            # specify search_after parameter to tell elastic search to search after specific value
             params = {
-                size: 2,
                 query: {
                     match: {
                         name: query
@@ -52,13 +33,32 @@ module Searchable
                     post_tags: ["</mark>"],
                     fields: { name: {}, email: {}, course: {} } 
                 },
-                # search_after: [19], # to search next results after the age value of 19
-                # sort can be used with keyword fields only 
-                # for text field we can do "name.keyword" for example.
-                sort: [
-                    {age: "asc"}  
-                ]
+                size: 2,
+                from: 0
+                # from: 2  # to see next results
             }
+
+            # search_after
+            # specify search_after parameter to tell elastic search to search after specific value
+            # params = {
+            #     size: 2,
+            #     query: {
+            #         match: {
+            #             name: query
+            #         },
+            #     },
+            #     highlight: { 
+            #         pre_tags: ["<mark>"],
+            #         post_tags: ["</mark>"],
+            #         fields: { name: {}, email: {}, course: {} } 
+            #     },
+            #     # search_after: [19], # to search next results after the age value of 19
+            #     # sort can be used with keyword fields only 
+            #     # for text field we can do "name.keyword" for example.
+            #     sort: [
+            #         {age: "asc"}  
+            #     ]
+            # }
 
             # multi-match query
             # to query multiple fields
@@ -79,6 +79,7 @@ module Searchable
 
             # compound query clause
             # filter by course
+            # bool to combine multiple queries : here we combine must and filter
             # params = {
             #     query: {
             #         bool: {
@@ -108,7 +109,7 @@ module Searchable
             #         bool: {
             #             should: [
             #                 { match: { name: { query: query, fuzziness: "auto" } }},
-            #                 { match: { email: { query: query, boost: 5} }},
+            #                 { match: { email: { query: query, boost: 5 } }},
             #                 { match: { course: query }},
             #             ],
             #         }
@@ -129,7 +130,7 @@ module Searchable
             # params = {
             #     query: {
             #         prefix: {
-            #             name: 'ab'
+            #             name: 'drashti'
             #         }
             #     }
             # }
