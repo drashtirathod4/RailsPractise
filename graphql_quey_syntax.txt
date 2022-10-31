@@ -1,0 +1,471 @@
+# my_authors
+{
+  myAuthors{
+    name
+    myArticlesCount
+    myArticles {
+    	title
+      description
+    }
+  }
+}
+
+# my_author(id)
+{
+  myAuthor(id: 2){
+    name
+    myArticlesCount
+    myArticles {
+    	title
+      description
+    }
+  }
+}
+
+# new Author create 
+mutation{
+  createMyAuthor(input:{
+    name:"Test"
+  }) {
+   author {
+    	id,
+    	name
+  	}
+    errors
+	}
+} 
+
+# update author
+mutation{
+  updateMyAuthor(input:{
+    id: 1
+    name:"Article 1"
+  }) {
+   author {
+    	name
+  	}
+    errors
+	}
+}
+
+# Delete Author
+mutation{
+  deleteMyAuthor(input:{
+    id: 5
+  }) {
+    errors
+    message
+	}
+}
+
+
+# my_articles
+query{
+  myArticles {
+    id
+    title
+    description
+    myAuthor {
+      name
+    }
+  }
+}
+
+# my_article(id)
+{
+  myArticle(id: 2){
+    title
+    description
+    myAuthorId
+  }
+}
+
+# new article create
+mutation{
+  createMyArticle(input:{
+    title:"Test Article"
+    description:"Test Description"
+    myAuthorId: 1
+  }) {
+   article {
+    	title,
+    	description
+  	}
+    errors
+	}
+}
+
+# Update Article
+mutation{
+  updateMyArticle(input:{
+    id: 3
+    title:"Edited Title"
+    description:"Edited"
+  }) {
+   article {
+    	title
+    	description
+  	}
+    errors
+	}
+}
+
+# update Article
+mutation {
+  updateMyArticle(id: 1, title: "abc", description: "abc") {
+    article {
+      id,
+      title,
+      description
+    }
+    errors
+  }
+}
+
+# Delete Article
+mutation{
+  deleteMyArticle(input:{
+    id: 5
+  }) {
+    errors
+    message
+	}
+}
+
+
+# Aliases Example :
+{
+  myArticles{
+    Article_Title: title
+    description
+  }
+}
+
+# Operation name example :
+# "firstQuery" and "secondQuery" are the operation names
+query firstQuery{ 
+	myAuthor(id: 2){
+    id
+    authorName: name
+    allArticles: myArticles{
+      title
+    }
+  }
+}
+
+query secondQuery{ 
+	myAuthor(id: 3){
+    id
+    authorName: name
+    allArticles: myArticles{
+      title
+    }
+  }
+}
+
+# Variables Example :
+query Author($authorId: ID!){ 
+	myAuthor(id: $authorId){
+    id
+    authorName: name
+    allArticles: myArticles{
+      title
+    }
+  }
+}
+-> Exclamation mark here for not null - The id shouldn't be null.
+-> pass query variable like this "Query Variables" section on graphql video
+{
+  "authorId": 2
+}
+
+# Fragments example
+query firstQuery{ 
+	myAuthors {
+    ... AuthorDetails
+  }
+}
+
+query secondQuery{ 
+	myAuthors{
+    ... AuthorDetails
+  }
+}
+
+fragment AuthorDetails on MyAuthor{
+  id
+  authorName: name
+  allArticles: myArticles{
+    title
+    description
+  }
+}
+
+# Directives Example
+# @include
+{
+	myArticles {
+    title
+    description @include(if: true)
+  }
+}
+
+# @skip
+{
+	myArticles {
+    title
+    description @skip(if: true)
+  }
+}
+
+# Introspection
+# To see which types are available
+{
+  __schema {
+    types {
+      name
+    }
+  }
+} 
+
+# To see what queries are available
+{
+  __schema {
+    queryType {
+      name
+    }
+  }
+} 
+
+# To examine one specific type 
+# kind to know is it an interface or an object?
+{
+  __type(name: "MyAuthor") {
+    name
+    kind 
+  }
+}
+
+# To know what fields are available?
+{
+  __type(name: "MyAuthor") {
+    name
+    fields {
+      name
+      type {
+        name
+        kind
+      }
+    }
+  }
+}
+
+# To ask the system for documentation
+{
+  __type(name: "MyAuthor") {
+    name
+    description
+  }
+}
+
+# Pagination query
+{
+  myAuthorsConnection(first:5, before: "Ng==") {
+    totalCount
+    pageInfo {
+      endCursor
+      startCursor
+      hasPreviousPage
+      hasNextPage
+    }
+    edges {
+      cursor
+      node {
+        name
+        myArticles {
+          title
+          description
+        }
+      }
+    }
+  }
+}
+
+
+# ------------------------------- Authorization in GraphQL ---------------------------------------
+
+# create new user
+mutation {
+  createMyUser(
+    name: "Drashti",
+    authProvider: {
+      credentials: {
+        email: "drashti@mail.com",
+        password: "123456"
+      }
+  	}
+  ) {
+    id
+    name
+    email
+  }
+}
+
+# ------------------ To sign in the user -------------------- 
+mutation {
+  signInMyUser (
+    credentials: {
+      email: "drashti@mail.com",
+      password: "123456"
+    }
+  ) {
+    token
+    myUser {
+      id
+    }
+  }
+}
+
+--> It will return this as a result :
+{
+  "data": {
+    "signInMyUser": {
+      "token": "H0Q1S5jVIhF3AQDZ6SVJXOa72A==--RugVBwgq4KmaNhmc--di9zWGT5CYPcZEuEItt8ng==",
+      "myUser": null
+    }
+  }
+}
+
+# create link 
+mutation {
+  createLink( 
+    url: "http://localhost:3000/graphiql",
+    description: "Testing Playground"
+  ) {
+    id
+    url
+    description
+    postedBy {
+      id
+      name
+    }
+  }
+}
+
+# MyReview 
+{
+	myReview(myReviewId: 1) {
+    id 
+    body
+    title
+  }
+}
+
+--> It will return this if user is not logged in
+{
+  "data": {
+    "myReview": null
+  },
+  "errors": [
+    {
+      "message": "login required!!",
+      "locations": [
+        {
+          "line": 2,
+          "column": 2
+        }
+      ],
+      "path": [
+        "myReview"
+      ]
+    }
+  ]
+}
+
+# Update MyReview
+mutation{
+	updateMyReview(myReviewId: 1, title: "Review 1", body: "Body") {
+    id 
+    body
+    title
+  }
+}
+
+--> If currently logged user is not admin it'll return "permission denied" error or will update the review.
+{
+  "data": null,
+  "errors": [
+    {
+      "message": "Permission denied!!",
+      "locations": [
+        {
+          "line": 2,
+          "column": 2
+        }
+      ],
+      "path": [
+        "updateMyReview"
+      ]
+    }
+  ]
+}
+
+--> Or if the user is not logged in it'll return "login require" error.
+
+
+
+# I want this query to be returned only when the data I own (Authorization)
+# You can only view your own reviews
+{
+	myReview(myReviewId: 1) {
+    id 
+    body
+    title
+  }
+}
+
+--> If the fetched review is not currently logged in user's review then it will return this error
+{
+  "data": {
+    "myReview": null
+  },
+  "errors": [
+    {
+      "message": "Permission denied!!",
+      "locations": [
+        {
+          "line": 2,
+          "column": 2
+        }
+      ],
+      "path": [
+        "myReview"
+      ]
+    }
+  ]
+}
+
+
+# Field is returned only when the logged-in user's own data (Authorization)
+# In the previous example, I defined MyReviewType so that I can only see the entire response for my data. However, there may be times when you want to hide only certain fields, not all.
+{
+	myReview(myReviewId: 2) {
+    id 
+    body
+    title
+    secret
+  }
+}
+
+--> If the review that i'm fetching is not of currently logged in user's data then the secret field value will not be shown and instad null will be shown. Otherwise secret value will be visible to user
+{
+  "data": {
+    "myReview": {
+      "id": "2",
+      "body": "Body 2",
+      "title": "Review 2",
+      "secret": null
+    }
+  }
+}
+
