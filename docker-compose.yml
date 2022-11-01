@@ -1,0 +1,40 @@
+version: '2'
+services:
+    db: 
+      image: mysql/mysql-server:latest
+      restart: always
+      environment:
+        MYSQL_DATABASE: db/development.sqlite3
+      ports:
+        - "3306"
+      expose:
+        - "3306"
+      command: --default-authentication-plugin=mysql_native_password
+
+    app: 
+      build: .
+      command: bundle exec rails s -p 3000 -b '0.0.0.0'
+      volumes: 
+        - ".:/app"
+      ports: 
+        - "3000:3000"
+      depends_on:
+        - db
+      links:
+        - db
+      environment:
+        DB_NAME: db/development.sqlite3
+
+    elastic:
+      image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
+      environment:
+        network.host: 127.0.0.1
+        http.port: 9200
+        transport.host: localhost
+        network.bind_host: localhost
+        transport.tcp.port: 9300
+        network_mode: "host"
+        host: 127.0.0.1
+      ports: 
+        - "9200:9200"
+        - "9300:9300"
