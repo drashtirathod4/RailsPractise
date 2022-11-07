@@ -8,6 +8,7 @@
       <td><b>Course</b></td>
       <td><b>Start Date</b></td>
       <td><b>End Date</b></td>
+      <td><b>PDF</b></td>
       <td><b>View</b></td>
       <td><b>Edit</b></td>
       <td><b>Remove</b></td>
@@ -21,12 +22,13 @@
       <td><%= user.course %></td>
       <td><%= user.start_date %></td>
       <td><%= user.end_date %></td>
+      <td><%= link_to "PDF", user_path(user, format: :pdf) %></td>
       <td><%= button_to "View", user_path(user), method: :get %></td>
       <td><%= button_to "Edit", edit_user_path(user), method: :get %></td>
       <td><%= button_to 'Remove', user_path(user), method: 'delete' %></td>
     </tr>
   <% end %>
   <tr>
-    <td colspan="10" align="center"><%= button_to "Add new User", new_user_path, method: :get%></td>
+    <td colspan="11" align="center"><%= button_to "Add new User", new_user_path, method: :get%></td>
   </tr>
 </table>

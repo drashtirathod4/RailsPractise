@@ -4,5 +4,8 @@
     <h4>Email : <%= @user.phone %></h4>
     <h4>Email : <%= @user.email %></h4>
     <h4>Date of Birth : <%= @user.dob %></h4>
+    <% if @user.image.attached? %>
+        <%= image_tag @user.image, style: "width: 200px; display: block" %>
+    <% end %>
     <%= link_to "Back", users_path %></b>
 </center>
