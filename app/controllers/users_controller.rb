@@ -5,6 +5,12 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        @pdf = render pdf: "#{@user.id}", template: 'users/show', formats: [:html] # Excluding ".pdf" extension.
+      end
+    end
   end
 
   def new
@@ -44,6 +50,6 @@ class UsersController < ApplicationController
 
   private 
   def user_params
-    params.require(:user).permit(:name, :email, :phone, :dob, :agreement, :course, :start_date, :end_date)
+    params.require(:user).permit(:name, :email, :phone, :dob, :agreement, :course, :start_date, :end_date, :image)
   end
 end
