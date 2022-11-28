@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        @pdf = render pdf: "#{@user.id}", template: 'users/show', formats: [:html] # Excluding ".pdf" extension.
+        render pdf: "#{@user.id}", template: 'users/show', formats: [:html] # Excluding ".pdf" extension.
       end
     end
   end
